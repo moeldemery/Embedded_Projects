@@ -1,0 +1,45 @@
+/*
+ * SPI.h
+ *
+ *  Created on: 27 Jan 2020
+ *      Author: Mohamed
+ */
+
+#ifndef MCAL_INC_SPI_H_
+#define MCAL_INC_SPI_H_
+
+#include "STD_TYPES.h"
+#include "BIT_MATH.h"
+
+#define 		SPCR	 		*((volatile u8 * ) (0x2D))
+	#define 	SPIE 			7
+	#define 	SPE 			6
+	#define 	DORD 			5
+	#define 	MSTR 			4
+	#define 	CPOL 			3
+	#define 	CPHA 			2
+	#define 	SPR1 			1
+	#define 	SPR0 			0
+
+#define 		SPSR 			*((volatile u8 * ) (0x2E))
+	#define 	SPIF 			7
+	#define 	WCOL 			6
+
+#define 		SPDR 			*((volatile u8 * ) (0x2F))
+
+
+typedef enum {SPI_DISABLE,	SPI_EN} SPI_enable_t ;
+typedef enum {SPI_SLAVE	,	SPI_MASTER} SPI_M_S_t ;
+typedef enum {SPI_MSB_FIRST,SPI_LSB_FIRST} SPI_Data_Order_t ;
+typedef enum {SPI_LEADING_EDGE_RISING,SPI_LEADING_EDGE_FALLING} SPI_Clk_Polarity_t ;
+typedef enum {SPI_LEADING_EDGE_RISING,SPI_LEADING_EDGE_FALLING} SPI_Clk_Phase_t ;
+typedef enum {SPI_INT_DISABLE,SPI_INT_EN} SPI_Int_enable_t ;
+
+typedef struct
+{
+	SPI_enable_t		enable;
+
+}SPI_config_t;
+
+
+#endif /* MCAL_INC_SPI_H_ */

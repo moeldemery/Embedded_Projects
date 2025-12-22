@@ -1,0 +1,99 @@
+/*
+ * KPD.c
+ *
+ *  Created on: 16 Jan 2020
+ *      Author: Mohamed
+ */
+
+
+#include "../INC/KPD.h"
+
+u8 KPD_Get_State(void)
+{
+
+    u8 Col_value,State_busy=0;
+
+    DIO_Write(HIGH,GRP_14_ROW);
+    Col_value = DIO_Read(GRP_15_COL);
+
+        if (Col_value== (0B11110000))
+        {
+            State_busy = 0x00;
+        }
+        else
+        {
+            State_busy = 0xFF;
+        }
+
+
+    return State_busy;
+}
+
+u8 KPD_Debounce_Filter(void)
+{
+
+    u8 Col_check1,Col_check2,Col_value;
+
+    Col_check1=KPD_Get_State();
+    if(Col_check1 != LOW)
+    {
+        _delay_ms(10);
+        Col_check2=KPD_Get_State();
+        if(Col_check2 != LOW)
+        {
+            Col_value = DIO_Read(GRP_15_COL);
+            LED1_Toggle();
+            return Col_value;
+        }
+    }
+    else
+    {
+    	 Col_value=0xff;
+    }
+    return Col_value;
+}
+
+u8 KPD_Scan (void)
+{
+	u8 Local_Col_val;
+	u8 KPD_keyValue[]={'7','8','9','/','4','5','6','*','1','2','3','-','C','0','=','+'};
+	u8 KPD_ReturnValue=0;
+
+	int i;
+	for(i=0 ; i< 4 ; i++)
+	{
+		DIO_Write(~((0B0001<<KPD_ROW_PIN)<<i),GRP_14_ROW);
+		_delay_ms(50);
+		//Local_Col_val=DIO_Read(GRP_15_COL);
+		Local_Col_val=KPD_Debounce_Filter();
+		switch(Local_Col_val)
+		{
+			case (0B1110 <<KPD_COL_PIN):
+			{
+				KPD_ReturnValue = KPD_keyValue[0+(i*4)];
+				break;
+			}
+			case ( 0B1101<<KPD_COL_PIN):
+			{
+				KPD_ReturnValue = KPD_keyValue[1+(i*4)];
+				break;
+			}
+			case (0B1011<<KPD_COL_PIN):
+			{
+				KPD_ReturnValue = KPD_keyValue[2+(i*4)];
+				break;
+			}
+			case (0B0111 <<KPD_COL_PIN):
+			{
+				KPD_ReturnValue = KPD_keyValue[3+(i*4)];
+				break;
+			}
+		}
+
+		//DIO_Write((0B1111<<KPD_ROW_PIN),GRP_14_ROW);
+		//_delay_ms(150);
+		if(KPD_ReturnValue != 0)
+			break;
+	}
+	return KPD_ReturnValue;
+}

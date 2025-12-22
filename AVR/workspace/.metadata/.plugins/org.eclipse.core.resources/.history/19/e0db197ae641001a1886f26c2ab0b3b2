@@ -1,0 +1,184 @@
+/*
+ * TMR0.c
+ *
+ *  Created on: 18 Jan 2020
+ *      Author: Mohamed
+ */
+
+#include <../INC/TMR.h>
+
+#define	TMR_Number_of_groups 3
+
+
+TMR_config_t TMR_groups [1]=
+{
+	{	TIMER_0 , FAST_PWM_MODE , PRESCALER_1024	 ,DISABLE_TIMER_INT , 0  , 128 , DISABLE_OC_PIN ,PWM_INV_MODE}
+	//{	TIMER_0 , NORMAL_MODE , PRESCALER_1024	 ,DISABLE_TIMER_INT , 128 , 200 , DISABLE_OC_PIN ,DISABLE_PWM_PIN_MODE}
+};
+
+
+
+void TMR0_Init(void)
+{
+	u8 TCCR0_temp =TCCR0;
+	switch (TMR_groups[0].Timer_mode) {
+		case NORMAL_MODE:
+		{
+			CLR_BIT(TCCR0_temp,WGM00);
+			CLR_BIT(TCCR0_temp,WGM01);
+			break;
+
+		}
+		case PHASE_PWM_MODE:
+		{
+			SET_BIT(TCCR0_temp,WGM00);
+			CLR_BIT(TCCR0_temp,WGM01);
+			break;
+		}
+		case CTC_MODE:
+		{
+			CLR_BIT(TCCR0_temp,WGM00);
+			SET_BIT(TCCR0_temp,WGM01);
+
+			break;
+		}
+		case FAST_PWM_MODE:
+		{
+			SET_BIT(TCCR0_temp,WGM00);
+			SET_BIT(TCCR0_temp,WGM01);
+			break;
+		}
+		default:
+			break;
+	}
+
+	if(TMR_groups[0].Timer_mode == NORMAL_MODE || TMR_groups[0].Timer_mode == CTC_MODE)
+	{
+		switch (TMR_groups[0].Timer_compare_pin)
+		{
+			case DISABLE_OC_PIN:
+			{
+				CLR_BIT(TCCR0_temp,COM00);
+				CLR_BIT(TCCR0_temp,COM01);
+				break;
+			}
+			case TOGGLE_OC_PIN:
+			{
+				SET_BIT(TCCR0_temp,COM00);
+				CLR_BIT(TCCR0_temp,COM01);
+				break;
+			}
+			case CLR_OC_PIN:
+			{
+				CLR_BIT(TCCR0_temp,COM00);
+				SET_BIT(TCCR0_temp,COM01);
+				break;
+			}
+			case SET_OC_PIN:
+			{
+				SET_BIT(TCCR0_temp,COM00);
+				SET_BIT(TCCR0_temp,COM01);
+				break;
+			}
+			default:
+				break;
+		}
+	}
+	else if(TMR_groups[0].Timer_mode == PHASE_PWM_MODE || TMR_groups[0].Timer_mode == FAST_PWM_MODE)
+	{
+		switch (TMR_groups[0].Timer_pwm_mode)
+		{
+			case DISABLE_PWM_PIN_MODE:
+			{
+				CLR_BIT(TCCR0_temp,COM00);
+				CLR_BIT(TCCR0_temp,COM01);
+				break;
+			}
+			case PWM_NON_INV_MODE:
+			{
+				CLR_BIT(TCCR0_temp,COM00);
+				SET_BIT(TCCR0_temp,COM01);
+				break;
+			}
+			case PWM_INV_MODE:
+			{
+				SET_BIT(TCCR0_temp,COM00);
+				SET_BIT(TCCR0_temp,COM01);
+				break;
+			}
+			default:
+				break;
+		}
+	}
+
+	switch (TMR_groups[0].Timer_prescaller)
+	{
+		case DISABLE_PRESCALER:
+		{
+			CLR_BIT(TCCR0_temp,CS00);
+			CLR_BIT(TCCR0_temp,CS01);
+			CLR_BIT(TCCR0_temp,CS02);
+			break;
+		}
+		case PRESCALER_1:
+		{
+			SET_BIT(TCCR0_temp,CS00);
+			CLR_BIT(TCCR0_temp,CS01);
+			CLR_BIT(TCCR0_temp,CS02);
+			break;
+		}
+		case PRESCALER_8:
+		{
+			CLR_BIT(TCCR0_temp,CS00);
+			SET_BIT(TCCR0_temp,CS01);
+			CLR_BIT(TCCR0_temp,CS02);
+			break;
+		}
+		case PRESCALER_64:
+		{
+			SET_BIT(TCCR0_temp,CS00);
+			SET_BIT(TCCR0_temp,CS01);
+			CLR_BIT(TCCR0_temp,CS02);
+			break;
+		}
+		case PRESCALER_256:
+		{
+			CLR_BIT(TCCR0_temp,CS00);
+			CLR_BIT(TCCR0_temp,CS01);
+			SET_BIT(TCCR0_temp,CS02);
+			break;
+		}
+		case PRESCALER_1024:
+		{
+			SET_BIT(TCCR0_temp,CS00);
+			CLR_BIT(TCCR0_temp,CS01);
+			SET_BIT(TCCR0_temp,CS02);
+			break;
+		}
+		default:
+			break;
+	}
+
+	TCNT0 = TMR_groups[0].Timer_startingValue;
+	OCR0 = TMR_groups[0].Timer_compareValue;
+	TCCR0=TCCR0_temp;
+
+}
+
+void TMR0_Disable(void)
+{
+	u8 TCCR0_temp =TCCR0;
+	CLR_BIT(TCCR0_temp,CS00);
+	CLR_BIT(TCCR0_temp,CS01);
+	CLR_BIT(TCCR0_temp,CS02);
+	CLR_BIT(TCCR0_temp,COM00);
+	CLR_BIT(TCCR0_temp,COM01);
+	TCCR0=TCCR0_temp;
+}
+
+void TMR0_PWM(u8 Duty_cycle)
+{
+	TMR0_Disable();
+	TMR_groups[0].Timer_compareValue=Duty_cycle;
+	TMR0_Init();
+}

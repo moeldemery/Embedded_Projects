@@ -1,0 +1,683 @@
+/*
+ * APP_Story.c
+ *
+ *  Created on: 29 Jan 2020
+ *      Author: Mohamed
+ */
+
+#include "APP_Story.h"
+
+u8 Stickman_position=7;
+u8 book__position=4;
+u8 customChar_hi[] = {
+		  0B01110,
+		  0B01110,
+		  0B00101,
+		  0B11111,
+		  0B10100,
+		  0B00100,
+		  0B01010,
+		  0B10001
+		};
+	u8 customChar_stand[] = {
+		  0B01110,
+		  0B01110,
+		  0B00100,
+		  0B11111,
+		  0B00100,
+		  0B00100,
+		  0B01010,
+		  0B10001
+		};
+	u8 customChar_dance2[] = {
+		  0B01110,
+		  0B01110,
+		  0B10100,
+		  0B11111,
+		  0B00101,
+		  0B00100,
+		  0B01010,
+		  0B10001
+		};
+//	u8 customChar_inverted_stickman[] = {
+//		  0B10001,
+//		  0B10001,
+//		  0B11011,
+//		  0B11011,
+//		  0B00000,
+//		  0B11011,
+//		  0B10101,
+//		  0B01110
+//		};
+
+//	u8 customChar_moon[] = {
+//		  0B00011,
+//		  0B11001,
+//		  0B11101,
+//		  0B11100,
+//		  0B11100,
+//		  0B11100,
+//		  0B11001,
+//		  0B00011
+//		};
+
+	u8 customChar_book[] = {
+	  0B10001,
+	  0B11011,
+	  0B10101,
+	  0B10101,
+	  0B10101,
+	  0B10101,
+	  0B01110,
+	  0B00100
+	};
+	u8 customChar_lock_close[] = {
+	 0B01110,
+	 0B10001,
+	 0B10001,
+	 0B10001,
+	 0B11111,
+	 0B11011,
+	 0B11011,
+	 0B11111
+	};
+//	u8 customChar_lock_open[] = {
+//	 0B01110,
+//	 0B10000,
+//	 0B10000,
+//	 0B10000,
+//	 0B11111,
+//	 0B11011,
+//	 0B11011,
+//	 0B11111
+//	};
+
+	u8 customChar_key[] = {
+	  0B01110,
+	  0B10001,
+	  0B10001,
+	  0B01110,
+	  0B00100,
+	  0B00110,
+	  0B00100,
+	  0B00110
+	};
+
+
+void APP_LCD_story(void)
+{
+
+
+		LCD_void_Init();
+		ADC_Init();
+		LCD_Special_Char(customChar_hi,0);
+		LCD_Special_Char(customChar_stand,1);
+		LCD_Special_Char(customChar_dance2,2);
+		LCD_Special_Char(customChar_book,3);
+		LCD_Special_Char(customChar_lock_close,4);
+		LCD_Special_Char(customChar_key,5);
+
+		LCD_GoTO(1,1);
+		LCD_void_SendString((u8*)"Hey ");
+		_delay_ms(2000);
+		LCD_void_SendString((u8*)"down here");
+		_delay_ms(2000);
+		APP_LCD_Hi();
+
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"This is me ");
+		_delay_ms(2000);
+
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"StickMan ");
+		_delay_ms(2000);
+
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"i need ur help ");
+		_delay_ms(2000);
+/*
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"My Story ");
+		_delay_ms(2000);
+
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"Be careful !!! ");
+		_delay_ms(2000);
+
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"it is really sad ");
+		_delay_ms(2000);
+
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"But First can you ");
+		_delay_ms(2000);
+*/
+
+		//APP_LCD_Draw_Dino();
+
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"Do u see my book ");
+		_delay_ms(2000);
+
+
+
+		LCD_GoTO(book__position,2);
+		LCD_void_Data(0x03);
+		_delay_ms(3000);
+
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"Take me there");
+		_delay_ms(2000);
+
+
+		while(1)
+		{
+			if(BTN0_GetValue())
+			{
+				while(BTN0_GetValue());
+				LCD_GoTO(Stickman_position,2);
+				LCD_void_Data(' ');
+				Stickman_position--;
+
+				 if(Stickman_position <= 5)
+				{
+
+					Stickman_position=6;
+					APP_LCD_ClearLine1();
+					LCD_GoTO(1,1);
+					LCD_void_SendString((u8*)"oh it's locked");
+					LCD_GoTO(book__position,2);
+					LCD_void_Data(' ');
+					LCD_GoTO(book__position,2);
+					LCD_void_Data(0x4);
+					LCD_GoTO(Stickman_position,2);
+					LCD_void_Data(0x00);
+					_delay_ms(3000);
+					break;
+				}
+				 else if(Stickman_position <= 7)
+				{
+					APP_LCD_ClearLine1();
+					LCD_void_SendString((u8*)"nearly there");
+				}
+				else if(Stickman_position <= 9)
+				{
+					APP_LCD_ClearLine1();
+					LCD_void_SendString((u8*)"keep going");
+				}
+
+				else
+				{
+					APP_LCD_ClearLine1();
+					LCD_void_SendString((u8*)"yes this way");
+
+				}
+				LCD_GoTO(Stickman_position,2);
+				LCD_void_Data(0x02);
+			}
+
+			if(BTN2_GetValue())
+			{
+				while(BTN2_GetValue());
+				LCD_GoTO(Stickman_position,2);
+				LCD_void_Data(' ');
+				Stickman_position++;
+
+
+				 if(Stickman_position >= 12)
+				{
+					Stickman_position=12;
+					APP_LCD_ClearLine1();
+					LCD_void_SendString((u8*)"I AM NOT MOVING");
+				}
+				 else if(Stickman_position >= 10)
+				{
+					APP_LCD_ClearLine1();
+					LCD_void_SendString((u8*)"I said STOP");
+				}
+				else if(Stickman_position >= 8)
+				{
+					APP_LCD_ClearLine1();
+					LCD_void_SendString((u8*)"Stop it");
+				}
+
+				else
+				{
+					APP_LCD_ClearLine1();
+					LCD_void_SendString((u8*)"Wrong Direction");
+
+				}
+				LCD_GoTO(Stickman_position,2);
+				LCD_void_Data(0x00);
+			}
+		}
+
+		LCD_GoTO(1,1);
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"My bad i forgot");
+		_delay_ms(2000);
+
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"i always lock ");
+		_delay_ms(2000);
+
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"my diaries ");
+		_delay_ms(2000);
+
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"i keep the key");
+		_delay_ms(2000);
+
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"in a secret");
+		_delay_ms(2000);
+
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"closet in the");
+		_delay_ms(2000);
+
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"PIANO !! First");
+		_delay_ms(2000);
+
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"lets go there");
+		_delay_ms(2000);
+
+		LCD_GoTO(13,2);
+		LCD_void_Data(0x05);
+
+		while(1)
+		{
+			if(BTN0_GetValue())
+			{
+				while(BTN0_GetValue());
+				LCD_GoTO(Stickman_position,2);
+				LCD_void_Data(' ');
+				Stickman_position--;
+
+				 if(Stickman_position <= 5)
+				{
+
+					 Stickman_position=5;
+					APP_LCD_ClearLine1();
+					LCD_void_SendString((u8*)"I AM NOT MOVING");
+
+
+				}
+				 else if(Stickman_position <= 7)
+				{
+					APP_LCD_ClearLine1();
+					LCD_void_SendString((u8*)"Again! wrong way");
+				}
+
+				else
+				{
+					APP_LCD_ClearLine1();
+					LCD_void_SendString((u8*)"oposite way dude");
+
+				}
+				LCD_GoTO(Stickman_position,2);
+				LCD_void_Data(0x02);
+			}
+
+			if(BTN2_GetValue())
+			{
+				while(BTN2_GetValue());
+				LCD_GoTO(Stickman_position,2);
+				LCD_void_Data(' ');
+				Stickman_position++;
+
+
+				 if(Stickman_position >= 12)
+				{
+					Stickman_position=12;
+					LCD_GoTO(Stickman_position,2);
+					LCD_void_Data(0x00);
+					break;
+				}
+				else
+				{
+					APP_LCD_ClearLine1();
+				}
+				LCD_GoTO(Stickman_position,2);
+				LCD_void_Data(0x00);
+			}
+		}
+
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"we are here ");
+		_delay_ms(2000);
+
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"the camber unlock");
+		_delay_ms(2000);
+
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"with sound ");
+		_delay_ms(2000);
+
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"from the piano");
+		_delay_ms(2000);
+
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"play the patern!");
+		_delay_ms(2000);
+
+		TMR2_PWM(100);
+		APP_LCD_Draw_bar(40);
+		_delay_ms(2000);
+		TMR2_PWM(200);
+		APP_LCD_Draw_bar(80);
+		_delay_ms(2000);
+		TMR2_PWM(50);
+		APP_LCD_Draw_bar(20);
+		_delay_ms(2000);
+		TMR2_PWM(100);
+		APP_LCD_Draw_bar(40);
+		_delay_ms(2000);
+		TMR2_Disable();
+
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"Your turn !!");
+
+		u8 game_statues=0;
+		while(game_statues != 1)
+		{
+
+
+			if(game_statues ==2 )
+			{
+				APP_LCD_ClearLine1();
+				LCD_void_SendString((u8*)"You Broke my");
+				_delay_ms(2000);
+
+				APP_LCD_ClearLine1();
+				LCD_void_SendString((u8*)"Piano!! you %&*#");
+				_delay_ms(2000);
+
+				APP_LCD_ClearLine1();
+				LCD_void_SendString((u8*)"Let me try to");
+				_delay_ms(2000);
+
+				APP_LCD_ClearLine1();
+				LCD_void_SendString((u8*)"fix it again");
+				_delay_ms(2000);
+				game_statues=0;
+			}
+			game_statues=APP_LCD_TMR2_BUZZER_Control_bar();
+		}
+
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"Welldone !!");
+		_delay_ms(2000);
+
+
+
+}
+void APP_LCD_ClearLine1(void)
+{
+	LCD_GoTO(1,1);
+	LCD_void_SendString((u8*)"                     ");
+	LCD_GoTO(1,1);
+}
+void APP_LCD_Hi(void)
+{
+	LCD_GoTO(Stickman_position,2);
+	LCD_void_Data(0x00);
+	_delay_ms(1000);
+	LCD_GoTO(Stickman_position,2);
+	LCD_void_Data(0x01);
+	_delay_ms(1000);
+	LCD_GoTO(Stickman_position,2);
+	LCD_void_Data(0x00);
+	_delay_ms(1000);
+	LCD_GoTO(Stickman_position,2);
+	LCD_void_Data(0x01);
+	_delay_ms(1000);
+}
+void APP_LCD_Draw_bar(u8 num)
+{
+	u8 customChar_Block0[] = {
+	  0B11111,
+	  0B11111,
+	  0B11111,
+	  0B11111,
+	  0B11111,
+	  0B11111,
+	  0B11111,
+	  0B11111
+	};
+	u8 customChar_Block1[] = {
+	  0B11110,
+	  0B11110,
+	  0B11110,
+	  0B11110,
+	  0B11110,
+	  0B11110,
+	  0B11110,
+	  0B11110
+	};
+	u8 customChar_Block2[] = {
+	  0B11100,
+	  0B11100,
+	  0B11100,
+	  0B11100,
+	  0B11100,
+	  0B11100,
+	  0B11100,
+	  0B11100
+	};
+	u8 customChar_Block3[] = {
+	  0B11000,
+	  0B11000,
+	  0B11000,
+	  0B11000,
+	  0B11000,
+	  0B11000,
+	  0B11000,
+	  0B11000
+	};
+	u8 customChar_Block4[] = {
+	  0B10000,
+	  0B10000,
+	  0B10000,
+	  0B10000,
+	  0B10000,
+	  0B10000,
+	  0B10000,
+	  0B10000
+	};
+
+	LCD_Special_Char(customChar_Block0,3);
+	LCD_Special_Char(customChar_Block1,4);
+	LCD_Special_Char(customChar_Block2,5);
+	LCD_Special_Char(customChar_Block3,6);
+	LCD_Special_Char(customChar_Block4,7);
+
+	LCD_GoTO(1,1);
+	LCD_void_Data(' ');
+	LCD_void_Data(' ');
+	LCD_void_Data('z'+5);
+
+	u8 i =0;
+	for(i=0;i<10;i++)
+	{
+		if(num>=10)
+		{
+			LCD_void_Data(0x03);
+			num=num-10;
+		}
+		else if(num >=8)
+		{
+			LCD_void_Data(0x04);
+			num=0;
+		}
+		else if(num >=6)
+		{
+			LCD_void_Data(0x05);
+			num=0;
+		}
+		else if(num >=4)
+		{
+			LCD_void_Data(0x06);
+			num=0;
+		}
+		else if(num >=2)
+		{
+			LCD_void_Data(0x07);
+			num=0;
+		}
+		else
+		{
+			LCD_void_Data(' ');
+			num=0;
+		}
+	}
+	LCD_void_Data('z'+4);
+
+}
+
+
+u8 APP_LCD_TMR2_BUZZER_Control_bar(void)
+{
+
+	u8 num;
+	u16 adc_val;
+	u16 adc_val_old=0;
+	u8 pwm_val;
+	u8 statues=0;
+	u8 pattern1=0;
+	u8 pattern2=0;
+	u8 pattern3=0;
+	while(1)
+	{
+		 adc_val = ADC_Start();
+		 if(adc_val != adc_val_old)
+		 {
+			adc_val_old=adc_val;
+			num = adc_val/10;
+			if(num>=100)
+				num=100;
+			pwm_val = adc_val/4;
+			APP_LCD_Draw_bar(100-num);
+		 }
+		 if(num<65 && num>55 && pattern1 ==0)
+		 {
+			 pattern1=1;
+			 LCD_GoTO(1,2);
+			 LCD_void_Data(0x07);
+		 }
+		 if(num<25 && num>15 && pattern1 ==1)
+		 {
+			 pattern2=1;
+			 LCD_GoTO(1,2);
+			 LCD_void_Data(0x06);
+		 }
+		 if(num<85 && num>75 && pattern2 ==1)
+		 {
+			 pattern3=1;
+			 LCD_GoTO(1,2);
+			 LCD_void_Data(0x05);
+		 }
+		 if(num<65 && num>60 && pattern3 ==1)
+		 {
+			 statues=1;
+			 LCD_GoTO(1,2);
+			 LCD_void_Data(0x03);
+			 break;
+		 }
+		  if (num <5)
+		 {
+			 statues=2;
+			 break;
+		 }
+		 _delay_ms(5);
+		TMR2_PWM(pwm_val);
+	}
+	TMR2_Disable();
+	return statues;
+}
+
+u8 itoa(u16 value,u8 *ptr)
+ {
+	u8 count=0;
+	u16 temp;
+	if(value==0)
+	{
+		*ptr='0';
+		return 1;
+	}
+/*
+	if(value<0)
+	{
+		value*=(-1);
+		*ptr++='-';
+		count++;
+	}*/
+	for(temp=value;temp>0;temp/=10,ptr++);	//reaching end digit in array
+	*ptr='\0';								//put string terminatorat last position		xxx\0
+	for(temp=value;temp>0;temp/=10)			//put numbers from last to first 			xx3\0
+	{										//											x23\0
+		*--ptr=temp%10+'0';					//											123\0
+		count++;
+	}
+	return count;
+ }
+
+
+//void APP_LCD_Draw_Dino(void)
+//{
+//	//APP_LCD_ClearLine1();
+//	u8 customChar_dino1[] = {
+//		  0B11111,
+//		  0B10111,
+//		  0B11100,
+//		  0B11111,
+//		  0B11000,
+//		  0B11111,
+//		  0B11101,
+//		  0B11100
+//		};
+//
+//		u8 customChar_dino2[] = {
+//		  0B11100,
+//		  0B11100,
+//		  0B11100,
+//		  0B11100,
+//		  0B11000,
+//		  0B01000,
+//		  0B01000,
+//		  0B01100
+//		};
+//		u8 customChar_dino3[] = {
+//		  0B00111,
+//		  0B00111,
+//		  0B01111,
+//		  0B01111,
+//		  0B11111,
+//		  0B11010,
+//		  0B10010,
+//		  0B00011
+//		};
+//		u8 customChar_dino4[] = {
+//		  0B00000,
+//		  0B00000,
+//		  0B00001,
+//		  0B00011,
+//		  0B00011,
+//		  0B00111,
+//		  0B00111,
+//		  0B00111
+//		};
+//	LCD_Special_Char(customChar_dino2,3);
+//	LCD_Special_Char(customChar_dino1,4);
+//	LCD_GoTO(9,1);
+//	LCD_void_Data(0x03);
+//	LCD_void_Data(0x04);
+//	LCD_void_Data(0x01);
+//
+//	_delay_ms(5000);
+//}

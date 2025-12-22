@@ -1,0 +1,23 @@
+/*
+ * BTN.c
+ *
+ *  Created on: 15 Jan 2020
+ *      Author: Mohamed
+ */
+
+#include "../INC/BTN.h"
+
+
+
+u8 BTN0_GetValue(void)
+{
+	return DIO_Read(GRP_3_BTN0);
+}
+u8 BTN1_GetValue(void)
+{
+	return DIO_Read(GRP_7_BTN1);
+}
+u8 BTN2_GetValue(void)
+{
+	return DIO_Read(GRP_8_BTN2);
+}

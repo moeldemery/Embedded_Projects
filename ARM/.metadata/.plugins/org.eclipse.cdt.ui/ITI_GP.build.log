@@ -1,0 +1,11 @@
+16:38:24 **** Incremental Build of configuration Debug for project ITI_GP ****
+make all 
+Invoking: Cross ARM GNU Print Size
+arm-none-eabi-size --format=berkeley "ITI_GP.elf"
+   text	   data	    bss	    dec	    hex	filename
+   5007	    176	    412	   5595	   15db	ITI_GP.elf
+Finished building: ITI_GP.siz
+ 
+
+16:38:25 Build Finished (took 663ms)
+

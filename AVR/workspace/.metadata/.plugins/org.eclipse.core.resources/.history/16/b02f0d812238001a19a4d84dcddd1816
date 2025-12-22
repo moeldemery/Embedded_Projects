@@ -1,0 +1,218 @@
+/*
+ * main.c
+ *
+ *  Created on: 31 Dec 2019
+ *      Author: Mohamed
+ */
+
+
+
+#include "UTILITIES/STD_TYPES.h"
+#include "UTILITIES/BIT_MATH.h"
+
+#include "MCAL/INC/DIO_driver.h"
+#include "MCAL/INC/UART_driver.h"
+
+#include "HAL/INC/LED.h"
+#include "HAL/INC/BTN.h"
+#include "HAL/INC/LCD_driver.h"
+
+#include <util/delay.h>
+
+
+void SVNSEG_Display(u8 number);
+void SVNSEG1_EN(void);
+void SVNSEG1_DEN(void);
+void SVNSEG2_EN(void);
+void SVNSEG2_DEN(void);
+void APP_COUNTER(u8 number);
+
+
+
+int main(void)
+{
+	DIO_Init();
+	//u8 count =0;
+	//UART_void_TXBlocking(0x55);
+	LCD_void_Init();
+
+	//LCD_void_SendString("FALA7EEEN");
+	LCD_Special_Char();
+/*
+	while(1)
+	{
+		//button 0 pressed
+		if( BTN0_GetValue())
+		{
+			while(BTN0_GetValue())
+			{
+				APP_COUNTER(count);
+				LED1_Off();
+			}
+			count++;
+			if(count>99)
+			{
+				count=0;
+			}
+
+		}
+		else
+		{
+			LED1_On();
+		}
+
+
+		if( BTN1_GetValue())
+		{
+			while(BTN1_GetValue());
+
+		}
+		else
+		{
+
+		}
+
+		//button 2 pressed
+		if( BTN2_GetValue())
+		{
+			while(BTN2_GetValue())
+			{
+				APP_COUNTER(count);
+				LED2_Off();
+			}
+			if(count==0)
+			{
+				count=99;
+			}
+			else
+			{
+				count--;
+			}
+		}
+		else
+		{
+			LED2_On();
+		}
+
+
+	APP_COUNTER(count);
+	*/
+	while(1){
+
+	}
+	return 0 ;
+}
+
+
+
+
+
+void SVNSEG_Display(u8 number)
+{
+	DIO_Write(number<<SEVEN_SEG_PIN,GRP_4_SEG1);
+}
+
+void SVNSEG1_EN(void)
+{
+	DIO_Write(HIGH,GRP_5_SEG1_EN);
+}
+
+void SVNSEG1_DEN(void)
+{
+	DIO_Write(LOW,GRP_5_SEG1_EN);
+}
+
+void SVNSEG2_EN(void)
+{
+	DIO_Write(HIGH,GRP_6_SEG2_EN);
+}
+void SVNSEG2_DEN(void)
+{
+	DIO_Write(LOW,GRP_6_SEG2_EN);
+}
+
+void APP_COUNTER(u8 number)
+{
+	u8 units = number%10;
+	u8 tenth = number/10;
+
+	SVNSEG1_EN();
+	SVNSEG_Display(units);
+	_delay_ms(1000);
+	SVNSEG1_DEN();
+
+	SVNSEG2_EN();
+	SVNSEG_Display(tenth);
+	_delay_ms(1000);
+	SVNSEG2_DEN();
+}
+
+
+ISR(1)
+{
+
+	LED1_On()();
+	_delay_ms(3000);
+	LED1_Off();
+}
+
+
+/*
+
+//DDRA = 0b00000001;
+LED_Init();
+BTN_Init();
+
+while(1)
+{
+
+	if(BTN_GetValue())
+	{
+		LED_Off();
+	}
+	else
+	{
+		LED_On();
+	}
+}
+*/
+/*
+ *
+
+void LED_Init(void);
+
+void LED_Off(void);
+void BTN_Init(void);
+u8 BTN_GetValue(void);
+LED_Init();
+INT_Void_ExternalIntInit(EXT_INT_0);
+
+
+void LED_Init(void)
+{
+	DIO_Enum_SetPinDirection(DIO_DDRD,DIO_PIN_0,DIO_PIN_OUTPUT);
+	DIO_Enum_SetPinValue(DIO_PORTD,DIO_PIN_0,DIO_PIN_HIGH);
+}
+
+void LED_On(void)
+{
+	DIO_Enum_SetPinValue(DIO_PORTD,DIO_PIN_0,DIO_PIN_HIGH);
+}
+
+void LED_Off(void)
+{
+	DIO_Enum_SetPinValue(DIO_PORTD,DIO_PIN_0,DIO_PIN_LOW);
+}
+
+void BTN_Init(void)
+{
+	DIO_Enum_SetPinDirection(DIO_DDRB,DIO_PIN_7,DIO_PIN_INPUT);
+	DIO_Enum_SetPinValue(DIO_PORTB,DIO_PIN_7,DIO_PIN_HIGH);
+}
+u8 BTN_GetValue(void)
+{
+	u8 local_u8Switch=0;
+	DIO_Enum_GetPinValue(DIO_PORTB,DIO_PIN_7,&local_u8Switch);
+	return local_u8Switch;
+}
+*/

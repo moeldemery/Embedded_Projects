@@ -1,0 +1,237 @@
+/*
+ * UART_driver.c
+ *
+ *  Created on: 15 Jan 2020
+ *      Author: Mohamed
+ */
+#include "UART_driver.h"
+
+
+UASRT_config_t UART_group[] = {{RX_TX_EN 	 , UART_MODE ,	 DATA_8_BIT 	, DISABLE_PARITY, \
+								ENDING_1_BIT , RISING_TX_FALLING_RX 		,9600}};
+
+void UART_void_Init(void)
+{
+	u32 ubrr= F_CPU/16/(UART_group[0].BoadRate -1);
+	UBRRH= (u8) ubrr>>8;
+	UBRRL= (u8) ubrr;
+	/****************************************************/
+	switch (UART_group[0].enable)
+	{
+		case RX_EN:
+		{
+			SET_BIT(UCSRB,RXEN);
+			break;
+		}
+		case TX_EN:
+		{
+			SET_BIT(UCSRB,TXEN);
+			break;
+		}
+		case RX_TX_EN:
+		{
+			SET_BIT(UCSRB,RXEN);
+			SET_BIT(UCSRB,TXEN);
+			break;
+		}
+		default:
+		{
+			//#warning "unexpected input in UART Enable type"
+			break;
+		}
+	}
+	/************************************************************************************************/
+	switch (UART_group[0].UART_USART)
+	{
+		case UART_MODE:
+		{
+			UCSRC &= ~((1<<URSEL)|(1<<UMSEL));		//Can't use set bit because UCSRC overlap UDDRH
+			break;
+		}
+		case USART_MODE:
+		{
+			UCSRC |= ((1<<URSEL)|(1<<UMSEL));		//Can't use set bit because UCSRC overlap UDDRH
+			break;
+		}
+		default:
+		{
+			//#warning "unexpected input in UART Enable type"
+			break;
+		}
+	}
+	/************************************************************************************************/
+	switch (UART_group[0].dataFrame)
+	{
+		case DATA_5_BIT:										//z2-z1-z0 = 000
+		{
+			UCSRC &= ~((1<<URSEL)|(1<<UCSZ0)|(1<<UCSZ1));		//Can't use set bit because UCSRC overlap UDDRH
+			CLR_BIT(UCSRB,UCSZ2);
+			break;
+		}
+		case DATA_6_BIT:										//z2-z1-z0 = 001
+		{
+			UCSRC |=  ((1<<URSEL)|(1<<UCSZ0));
+			UCSRC &= ~((1<<URSEL)|(1<<UCSZ1));
+			CLR_BIT(UCSRB,UCSZ2);
+			break;
+		}
+		case DATA_7_BIT:										//z2-z1-z0 = 010
+		{
+			UCSRC &= ~((1<<URSEL)|(1<<UCSZ0));
+			UCSRC |=  ((1<<URSEL)|(1<<UCSZ1));
+			CLR_BIT(UCSRB,UCSZ2);
+			break;
+		}
+		case DATA_8_BIT:										//z2-z1-z0 = 011
+		{
+			UCSRC |=  ((1<<URSEL)|(1<<UCSZ0)|(1<<UCSZ1));
+			CLR_BIT(UCSRB,UCSZ2);
+			break;
+		}
+		case DATA_9_BIT:										//z2-z1-z0 = 111
+		{
+			UCSRC |=  ((1<<URSEL)|(1<<UCSZ0)|(1<<UCSZ1));
+			UCSRC &= ~((1<<URSEL)|(1<<UCSZ1));
+			SET_BIT(UCSRB,UCSZ2);
+			break;
+		}
+		default:
+		{
+			//#warning "unexpected input in UART Enable type"
+			break;
+		}
+	}
+	/************************************************************************************************/
+	switch (UART_group[0].parity)
+	{
+		case DISABLE_PARITY:						//UPM1-UPM0 = 00
+		{
+			UCSRC &= ~((1<<URSEL)|(1<<UPM1)|(1<<UPM0));		//Can't use set bit because UCSRC overlap UDDRH
+			break;
+		}
+		case EVEN_PARITY:							//UPM1-UPM0 = 10
+		{
+			UCSRC |=  ((1<<URSEL)|(1<<UPM1));		//Can't use set bit because UCSRC overlap UDDRH
+			UCSRC &= ~((1<<URSEL)|(1<<UPM0));
+			break;
+		}
+		case ODD_PARITY:							//UPM1-UPM0 = 11
+		{
+			UCSRC |= ((1<<URSEL)|(1<<UPM1)|(1<<UPM0));		//Can't use set bit because UCSRC overlap UDDRH
+			break;
+		}
+		default:
+		{
+			//#warning "unexpected input in UART Enable type"
+			break;
+		}
+	}
+	/************************************************************************************************/
+	switch (UART_group[0].endingBits)
+	{
+		case ENDING_1_BIT:							//USBS = 0
+		{
+			UCSRC &= ~((1<<URSEL)|(1<<USBS));		//Can't use set bit because UCSRC overlap UDDRH
+			break;
+		}
+		case ENDING_2_BIT:							//USBS = 1
+		{
+			UCSRC |=  ((1<<URSEL)|(1<<USBS));		//Can't use set bit because UCSRC overlap UDDRH
+
+			break;
+		}
+
+		default:
+		{
+			//#warning "unexpected input in UART Enable type"
+			break;
+		}
+	}
+	/************************************************************************************************/
+	switch (UART_group[0].clockPolarity)
+	{
+		case RISING_TX_FALLING_RX:							//UCPOL = 0
+		{
+			UCSRC &= ~((1<<URSEL)|(1<<UCPOL));		//Can't use set bit because UCSRC overlap UDDRH
+			break;
+		}
+		case FALLING_TX_RISING_RX:							//UCPOL = 1
+		{
+			UCSRC |=  ((1<<URSEL)|(1<<UCPOL));		//Can't use set bit because UCSRC overlap UDDRH
+
+			break;
+		}
+
+		default:
+		{
+			//#warning "unexpected input in UART Enable type"
+			break;
+		}
+	}
+}
+
+
+void UART_void_TXBlocking(u16 u16_data)
+{
+	while( !GET_BIT(UCSRA,UDRE));
+	switch (UART_group[0].dataFrame) {
+		case DATA_5_BIT:
+		case DATA_6_BIT:
+		case DATA_7_BIT:
+		case DATA_8_BIT:
+		{
+			UDR= (u8)u16_data;
+			break;
+		}
+		case DATA_9_BIT:
+		{
+			CLR_BIT(UCSRB,TXB8);
+			if(u16_data & 0x0100 )
+			{
+				SET_BIT(UCSRB,TXB8);
+			}
+			break;
+		}
+		default:
+		{
+			break;
+		}
+	}
+
+}
+
+
+u16 UART_U16_RXBlocking(void)
+{
+	u16 copy_u16_dataRx;
+	while( !GET_BIT(UCSRA,RXC));
+
+	switch (UART_group[0].dataFrame) {
+			case DATA_5_BIT:
+			case DATA_6_BIT:
+			case DATA_7_BIT:
+			case DATA_8_BIT:
+			{
+				copy_u16_dataRx=UDR;
+				break;
+			}
+			case DATA_9_BIT:
+			{
+				u8 copy_u8_dataHigh = (UCSRA>>1) & 0x01 ;
+				u8 copy_u8_dataLow = UDR;
+
+				if ( UCSRA & ((1<<FE)|(1<<DOR)|(1<<PE)) )
+				{
+					return -1;
+				}
+
+				copy_u16_dataRx=(copy_u8_dataHigh<<8)|copy_u8_dataLow;
+				break;
+			}
+			default:
+			{
+				break;
+			}
+
+	return copy_u16_dataRx;
+}

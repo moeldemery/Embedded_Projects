@@ -1,0 +1,36 @@
+#include "STD_TYPES.h"
+#include "BIT_MATH.h"
+
+#include "DIO_interface.h"
+#include "RCC_interface.h"
+
+__attribute__((section(".ip_code"))) void GP_LED_ON(void)
+{
+	DIO_enuSetPinValue(DIO_u8_PIN32 , DIO_u8_HIGH);
+}
+
+
+int main()
+{
+  // At this stage the system clock should have already been configured
+  // at high speed.
+	RCC_SystemCLKInit();
+							//(2> APB2 Bus & 4> IOPCEN to enable clock on DIO PortC)
+	RCC_enueripheralCLKState(RCC_GPIOC_PERIPHERAL,RCC_u8_PERIPHERAL_CLK_ENABLED);	// I/O port C clock enable [RCC_APB2ENR_IOPCEN] > Page 145
+
+	DIO_enuSetPinMode(DIO_u8_PIN32 , DIO_u8_OUTPUT_2M_PP);
+
+	while(1)
+	{
+		GP_LED_ON();
+		DIO_enuSetPinValue(DIO_u8_PIN32 , DIO_u8_LOW);
+	}
+
+}
+
+
+
+// ----------------------------------------------------------------------------
+
+
+

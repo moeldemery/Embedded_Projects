@@ -1,0 +1,56 @@
+/*
+ * DIO_register.h
+ *
+ *  Created on: 31 Dec 2019
+ *      Author: Mohamed
+ */
+
+#ifndef MCAL_INC_DIO_REGISTER_H_
+#define MCAL_INC_DIO_REGISTER_H_
+
+	// address for port A
+	#define DIO_PORTA	0
+	#define DIO_DDRA	0
+	#define DIO_PINA	0
+
+	// address for port B
+	#define DIO_PORTB	1
+	#define DIO_DDRB	1
+	#define DIO_PINB	1
+
+	// address for port C
+	#define DIO_PORTC	2
+	#define DIO_DDRC	2
+	#define DIO_PINC	2
+
+	// address for port D
+	#define DIO_PORTD	3
+	#define DIO_DDRD	3
+	#define DIO_PIND	3
+
+
+#define DIO_PORT(n)	 (*((volatile u8*)(0x3B-(3*n))))
+#define DIO_DDR(n)	 (*((volatile u8*)(0x3A-(3*n))))
+#define DIO_PIN(n)	 (*((volatile u8*)(0x39-(3*n))))
+
+
+/* MACROS FOR NUMBER_OF_PINS */
+#define DIO_PIN_0	0
+#define DIO_PIN_1	1
+#define DIO_PIN_2	2
+#define DIO_PIN_3	3
+#define DIO_PIN_4	4
+#define DIO_PIN_5	5
+#define DIO_PIN_6	6
+#define DIO_PIN_7	7
+
+
+/* MACROS FOR Direction_OF_PINS */
+#define DIO_PIN_OUTPUT 	0xFF
+#define DIO_PIN_INPUT	0X00
+
+/* MACROS FOR PINS_VALUE BADEL 0 AW 1  */
+#define DIO_PIN_HIGH 	1
+#define DIO_PIN_LOW		0
+
+#endif /* MCAL_INC_DIO_REGISTER_H_ */

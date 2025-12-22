@@ -1,0 +1,43 @@
+09:09:27 **** Incremental Build of configuration Debug for project FreeOS ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=8000000UL -MMD -MP -MF"main.d" -MT"main.o" -c -o "main.o" "../main.c"
+Finished building: ../main.c
+ 
+Building target: FreeOS.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,FreeOS.map -mmcu=atmega32 -o "FreeOS.elf"  ./FreeRTOS/croutine.o ./FreeRTOS/heap_1.o ./FreeRTOS/list.o ./FreeRTOS/port.o ./FreeRTOS/queue.o ./FreeRTOS/tasks.o ./FreeRTOS/timers.o  ./main.o   
+Finished building target: FreeOS.elf
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S FreeOS.elf  >"FreeOS.lss"
+Finished building: FreeOS.lss
+ 
+Create Flash image (ihex format)
+avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex FreeOS.elf  "FreeOS.hex"
+Finished building: FreeOS.hex
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega32 FreeOS.elf
+AVR Memory Usage
+----------------
+Device: atmega32
+
+Program:   10052 bytes (30.7% Full)
+(.text + .data + .bootloader)
+
+Data:        767 bytes (37.5% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+Invoking: AVRDude
+D:\iti\c\IMT_Environment\IMT_SDK_Win_64\WinAVR\bin\avrdude -pm32 -cusbasp -Uflash:w:FreeOS.hex:a
+avrdude: error: could not find USB device "USBasp" with vid=0x16c0 pid=0x5dc
+make: *** [avrdudedummy] Error 1
+"make all" terminated with exit code 2. Build might be incomplete.
+
+09:09:29 Build Failed. 1 errors, 0 warnings. (took 1s.248ms)
+

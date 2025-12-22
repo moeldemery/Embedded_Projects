@@ -1,0 +1,10 @@
+/*
+ * UART_driver.c
+ *
+ *  Created on: 15 Jan 2020
+ *      Author: Mohamed
+ */
+#include "UART_driver.h"
+
+UASRT_config_t UART_group = {RX_TX_EN 	 , UART_MODE ,	 DATA_8_BIT 	, DISABLE_PARITY, \
+							ENDING_1_BIT , RISING_TX_FALLING_RX 		,9600};

@@ -1,0 +1,42 @@
+/*
+ * INT_interface.h
+ *
+ *  Created on: 11 Jan 2020
+ *      Author: Mohamed
+ */
+
+#ifndef MCAL_INC_INT_INTERFACE_H_
+#define MCAL_INC_INT_INTERFACE_H_
+
+#include "../UTILITIES/BIT_MATH.h"
+#include "../UTILITIES/STD_TYPES.h"
+
+#include "DIO_driver.h"
+
+void INT_Void_ExternalIntInit(u8 Copy_u8_ChannelNo);
+
+
+
+#define SREG_REG		(*((volatile u8*)(0x5F)))
+
+#define GICR_REG  	  	(*((volatile u8*)(0x5B)))
+#define GIFR_REG  	  	(*((volatile u8*)(0x5A)))
+
+#define MCUCR_REG 	 	 (*((volatile u8*)(0x55)))
+	#define ISC0 0
+	#define ISC1 2
+
+#define MCUCSR_REG 	  	(*((volatile u8*)(0x54)))
+
+
+#define EXT_INT_0 	6
+#define EXT_INT_1 	7
+#define EXT_INT_2 	5
+
+#define EXT_INT0_SENCE_LOW 				0
+#define EXT_INT0_SENCE_ANYCHANGE		1
+#define EXT_INT0_SENCE_FAILING			2
+#define EXT_INT0_SENCE_RISING			3
+
+
+#endif /* MCAL_INC_INT_INTERFACE_H_ */

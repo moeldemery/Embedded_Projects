@@ -1,0 +1,30 @@
+/*
+ * INT_program.c
+ *
+ *  Created on: 11 Jan 2020
+ *      Author: Mohamed
+ */
+
+
+#include "INT_interface.h"
+
+void INT_Void_ExternalIntInit(u8 Copy_u8_ChannelNo)
+{
+	switch (Copy_u8_ChannelNo)
+	{
+		case EXT_INT_0:
+		{
+
+			SET_BIT(SREG_REG,7);
+			SET_BIT(SREG_REG,7);
+			break;
+		}
+
+		default:
+		{
+
+			break;
+		}
+
+	}
+}

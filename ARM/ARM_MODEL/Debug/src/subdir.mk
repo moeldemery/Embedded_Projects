@@ -1,0 +1,45 @@
+################################################################################
+# Automatically-generated file. Do not edit!
+################################################################################
+
+# Add inputs and outputs from these tool invocations to the build variables 
+C_SRCS += \
+../src/DMA_program.c \
+../src/SysTick_program.c \
+../src/delay.c \
+../src/dio_program.c \
+../src/main.c \
+../src/nvic_program.c \
+../src/rcc_program.c \
+../src/usart_program.c 
+
+OBJS += \
+./src/DMA_program.o \
+./src/SysTick_program.o \
+./src/delay.o \
+./src/dio_program.o \
+./src/main.o \
+./src/nvic_program.o \
+./src/rcc_program.o \
+./src/usart_program.o 
+
+C_DEPS += \
+./src/DMA_program.d \
+./src/SysTick_program.d \
+./src/delay.d \
+./src/dio_program.d \
+./src/main.d \
+./src/nvic_program.d \
+./src/rcc_program.d \
+./src/usart_program.d 
+
+
+# Each subdirectory must supply rules for building sources it contributes
+src/%.o: ../src/%.c
+	@echo 'Building file: $<'
+	@echo 'Invoking: Cross ARM GNU C Compiler'
+	arm-none-eabi-gcc -mcpu=cortex-m3 -mthumb -Og -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -ffreestanding -fno-move-loop-invariants -Wall -Wextra  -g3 -DDEBUG -DUSE_FULL_ASSERT -DTRACE -DOS_USE_TRACE_SEMIHOSTING_DEBUG -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -DHSE_VALUE=8000000 -I"../include" -I"../system/include" -I"../system/include/cmsis" -I"../system/include/stm32f1-stdperiph" -std=gnu11 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -c -o "$@" "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+

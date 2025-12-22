@@ -1,0 +1,19 @@
+/*
+ * APP_Calc.c
+ *
+ *  Created on: 22 Jan 2020
+ *      Author: Mohamed
+ */
+
+void APP_STR_CPY(u8*arr , u8*copy_value ,u16 size)
+{
+	int i;
+	for (i = 0; i < size; ++i)
+	{
+		arr[i]=copy_value[i];
+	}
+}
+void APP_CALC_atoi(void)
+{
+
+}

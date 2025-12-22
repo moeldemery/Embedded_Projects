@@ -1,0 +1,17 @@
+/*
+ * TMR0.c
+ *
+ *  Created on: 18 Jan 2020
+ *      Author: Mohamed
+ */
+
+#include <TMR.h>
+
+#define	TMR_Number_of_groups 3
+
+TMR_config_t DIO_groups [TMR_Number_of_groups]=
+{
+	{	PORTD , 0B10000000 , OUTPUT , DO_NOT_CARE	} ,		/*led1 		1 group*/
+	{	PORTD , 0B01100000 , OUTPUT	, DO_NOT_CARE	} ,		/*led2 		2 group*/
+	{	PORTD , 0B00000001 , INPUT  , PULL_UP_EN	}
+};

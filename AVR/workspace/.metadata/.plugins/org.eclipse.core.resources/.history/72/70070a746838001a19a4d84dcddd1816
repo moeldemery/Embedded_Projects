@@ -1,0 +1,14 @@
+/*
+ * KPD.h
+ *
+ *  Created on: 16 Jan 2020
+ *      Author: Mohamed
+ */
+
+#ifndef HAL_INC_KPD_H_
+#define HAL_INC_KPD_H_
+
+u8 KPD_Get_State(void);
+
+
+#endif /* HAL_INC_KPD_H_ */

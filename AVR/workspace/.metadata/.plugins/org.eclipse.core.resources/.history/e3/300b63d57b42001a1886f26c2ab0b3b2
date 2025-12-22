@@ -1,0 +1,39 @@
+/*
+ * APP_Story.h
+ *
+ *  Created on: 29 Jan 2020
+ *      Author: Mohamed
+ */
+
+#ifndef APP_APP_STORY_H_
+#define APP_APP_STORY_H_
+
+#include "../UTILITIES/STD_TYPES.h"
+#include "../UTILITIES/BIT_MATH.h"
+
+#include "../MCAL/INC/DIO_driver.h"
+#include "../MCAL/INC/UART_driver.h"
+#include "../MCAL/INC/INT_interface.h"
+#include "../MCAL/INC/TMR.h"
+#include "../MCAL/INC/SPI.h"
+#include "../MCAL/INC/ADC.h"
+
+#include "../HAL/INC/LED.h"
+#include "../HAL/INC/BTN.h"
+#include "../HAL/INC/LCD_driver.h"
+#include "../HAL/INC/SVNSEG.h"
+#include "../HAL/INC/KPD.h"
+
+#include <util/delay.h>
+
+
+
+void APP_ADC_LCD(void);
+
+void APP_LCD_ClearLine1(void);
+void APP_LCD_Hi(void);
+void APP_LCD_Draw_bar(u8 num);
+u8 	 APP_LCD_TMR2_BUZZER_Control_bar(void);
+u8 	 itoa(u16 value,u8 *ptr);
+
+#endif /* APP_APP_STORY_H_ */

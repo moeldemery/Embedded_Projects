@@ -1,0 +1,26 @@
+/*
+ * LED.c
+ *
+ *  Created on: 15 Jan 2020
+ *      Author: Mohamed
+ */
+
+
+void LED1_On(void)
+{
+	DIO_Write(HIGH,GRP_1_LED);
+}
+
+void LED1_Off(void)
+{
+	DIO_Write(LOW,GRP_1_LED);
+}
+void LED2_On(void)
+{
+	DIO_Write(HIGH,GRP_2_LED);
+}
+
+void LED2_Off(void)
+{
+	DIO_Write(LOW,GRP_2_LED);
+}

@@ -1,0 +1,35 @@
+/*
+ * LCD_driver.c
+ *
+ *  Created on: 15 Jan 2020
+ *      Author: Mohamed
+ */
+
+#include "../INC/LCD_driver.h"
+
+extern LCD_config_t LCD_config_groups[];
+
+#define EN   LCD_config_groups[0].LCD_En_Group_Number
+#define RS   LCD_config_groups[0].LCD_RS_Group_Number
+#define RW   LCD_config_groups[0].LCD_RW_Group_Number
+#define mode LCD_config_groups[0].LCD_MODE_4_OR_8
+#define data LCD_config_groups[0].LCD_DATA_Group_Number
+
+
+void LCD_void_Init(void)
+{
+
+}
+
+void LCD_void_SendCMD(unsigned char order)
+{
+
+}
+void LCD_void_SendData(unsigned char data_byte)
+{
+
+}
+void LCD_void_SendString (unsigned char *s)
+{
+
+}

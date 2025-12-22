@@ -1,0 +1,420 @@
+/*
+ * APP_UnitTesting.c
+ *
+ *  Created on: 16 Jan 2020
+ *      Author: Mohamed
+ */
+
+#include "APP_UnitTesting.h"
+
+void APP_COUNTER(u8 number)
+{
+	u8 units = number%10;
+	u8 tenth = number/10;
+
+	SVNSEG1_EN();
+	SVNSEG_Display(units);
+	_delay_ms(10);
+	SVNSEG1_DEN();
+
+	SVNSEG2_EN();
+	SVNSEG_Display(tenth);
+	_delay_ms(10);
+	SVNSEG2_DEN();
+}
+
+void APP_Counter_2SvnSeg_2Btn_3Led(void)
+{
+	static u8 count =0;
+	while(1)
+	{
+		//button 0 pressed
+		if( BTN0_GetValue())
+		{
+			while(BTN0_GetValue())
+			{
+				APP_COUNTER(count);
+				LED1_Off();
+			}
+			count++;
+			if(count>99)
+			{
+				count=0;
+			}
+
+		}
+		else
+		{
+			LED1_On();
+		}
+
+
+		if( BTN1_GetValue())
+		{
+			while(BTN1_GetValue());
+
+		}
+		else
+		{
+
+		}
+
+		//button 2 pressed
+		if( BTN2_GetValue())
+		{
+			while(BTN2_GetValue())
+			{
+				APP_COUNTER(count);
+				LED2_Off();
+			}
+			if(count==0)
+			{
+				count=99;
+			}
+			else
+			{
+				count--;
+			}
+		}
+		else
+		{
+			LED2_On();
+		}
+
+
+	APP_COUNTER(count);
+	}
+}
+
+void APP_BTN_Toggle_LED(void)
+{
+	while(1)
+	{
+		if(BTN1_GetValue())
+		{
+			LED1_Off();
+		}
+		else
+		{
+			LED1_On();
+		}
+	}
+}
+
+void APP_LCD_shifting_2BTN(void)
+{
+	u8 customChar1[] = {
+	  0B01110,
+	  0B01110,
+	  0B00101,
+	  0B11111,
+	  0B10100,
+	  0B00100,
+	  0B01010,
+	  0B10001
+	};
+	u8 customChar2[] = {
+	  0B01110,
+	  0B01110,
+	  0B10100,
+	  0B11111,
+	  0B00101,
+	  0B00100,
+	  0B01010,
+	  0B10001
+	};
+
+	LCD_void_Init();
+	LCD_Special_Char(customChar1,0);
+	LCD_Special_Char(customChar2,1);
+	LCD_GoTO(1,1);
+	LCD_void_SendString((u8*)"__FLA1__");
+	LCD_GoTO(1,2);
+	LCD_void_Data(0x00);
+	LCD_void_SendString((u8*)"__FLA7__");
+	LCD_void_Data(0x01);
+
+
+
+	while(1)
+	{
+		if(BTN0_GetValue())
+		{
+			while(BTN0_GetValue());
+			LED1_On();
+			LCD_Shift_Right();
+		}
+
+		if(BTN2_GetValue())
+		{
+			while(BTN2_GetValue());
+			LCD_Shift_Left();
+		}
+	}
+}
+/****************************************/
+u8 Stickman_position=7;
+void APP_LCD_story(void)
+{
+	u8 customChar_hi[] = {
+		  0B01110,
+		  0B01110,
+		  0B00101,
+		  0B11111,
+		  0B10100,
+		  0B00100,
+		  0B01010,
+		  0B10001
+		};
+	u8 customChar_stand[] = {
+		  0B01110,
+		  0B01110,
+		  0B00100,
+		  0B11111,
+		  0B00100,
+		  0B00100,
+		  0B01010,
+		  0B10001
+		};
+	u8 customChar_dance2[] = {
+		  0B01110,
+		  0B01110,
+		  0B10100,
+		  0B11111,
+		  0B00101,
+		  0B00100,
+		  0B01010,
+		  0B10001
+		};
+	u8 customChar_inverted_stickman[] = {
+		  0B10001,
+		  0B10001,
+		  0B11011,
+		  0B11011,
+		  0B00000,
+		  0B11011,
+		  0B10101,
+		  0B01110
+		};
+
+	u8 customChar_moon[] = {
+		  0B00011,
+		  0B11001,
+		  0B11101,
+		  0B11100,
+		  0B11100,
+		  0B11100,
+		  0B11001,
+		  0B00011
+		};
+
+	u8 customChar_book[] = {
+	  0B10001,
+	  0B11011,
+	  0B10101,
+	  0B10101,
+	  0B10101,
+	  0B10101,
+	  0B01110,
+	  0B00100
+	};
+
+
+		LCD_void_Init();
+		LCD_Special_Char(customChar_hi,0);
+		LCD_Special_Char(customChar_stand,1);
+		LCD_GoTO(1,1);
+		LCD_void_SendString((u8*)"Hey ");
+		_delay_ms(2000);
+		LCD_void_SendString((u8*)"down here");
+		_delay_ms(2000);
+		APP_LCD_Hi();
+/*
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"This is me ");
+		_delay_ms(2000);
+
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"StickMan ");
+		_delay_ms(2000);
+
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"Let me tell you ");
+		_delay_ms(2000);
+
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"My Story ");
+		_delay_ms(2000);
+
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"Be careful !!! ");
+		_delay_ms(2000);
+
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"it is really sad ");
+		_delay_ms(2000);
+
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"But First can you ");
+		_delay_ms(2000);
+*/
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"Do u see my book ");
+		_delay_ms(2000);
+
+		LCD_Special_Char(customChar_book,2);
+		LCD_GoTO(4,2);
+		LCD_void_Data(0x02);
+		_delay_ms(3000);
+
+		APP_LCD_ClearLine1();
+		LCD_void_SendString((u8*)"Take me there");
+		_delay_ms(2000);
+
+
+		while(1)
+		{
+			if(BTN0_GetValue())
+			{
+				while(BTN0_GetValue());
+				LCD_GoTO(7,2);
+				LCD_void_Data(' ');
+				LCD_GoTO(6,2);
+				LCD_void_Data(0x00);
+			}
+
+			if(BTN2_GetValue())
+			{
+				while(BTN2_GetValue());
+				LCD_GoTO(7,2);
+				LCD_void_Data(' ');
+				LCD_GoTO(8,2);
+				LCD_void_Data(0x00);
+			}
+		}
+
+}
+void APP_LCD_ClearLine1(void)
+{
+	LCD_GoTO(1,1);
+	LCD_void_SendString((u8*)"                     ");
+	LCD_GoTO(1,1);
+}
+void APP_LCD_Hi(void)
+{
+	LCD_GoTO(Stickman_position,2);
+	LCD_void_Data(0x00);
+	_delay_ms(1000);
+	LCD_GoTO(Stickman_position,2);
+	LCD_void_Data(0x01);
+	_delay_ms(1000);
+	LCD_GoTO(Stickman_position,2);
+	LCD_void_Data(0x00);
+	_delay_ms(1000);
+	LCD_GoTO(Stickman_position,2);
+	LCD_void_Data(0x01);
+	_delay_ms(1000);
+}
+void APP_UART_LCD (void)
+{
+		UART_void_Init();
+		u8 data;
+		static u8 count=0;
+		LCD_void_Init();
+		while(1)
+		{
+			//UART_void_TXBlocking('5');
+			data =(u8)UART_U16_RXBlocking();
+			UART_void_TXBlocking(data);
+			if(0 != data)
+			{
+				LCD_void_Data(data+count);
+				count++;
+				data =0;
+			}
+
+			_delay_ms(1000);
+		}
+}
+
+void APP_UART_virtual(void)
+{
+
+			UART_void_Init();
+			u8 data;
+			while(1)
+			{
+				data =(u8)UART_U16_RXBlocking();
+				UART_void_TXBlocking(data);
+
+			}
+}
+
+void APP_TMR0_polling_CTC_cmpmatch_toggle_LED1 (void)
+{
+	DIO_Init();
+	TMR0_Init();
+	int count =0;
+	while(1)
+	{
+		while(!GET_BIT(TIFR , OCF0));
+		count++;
+		if( count >= 45 )
+		{
+			LED1_Toggle();
+			count =0;
+		}
+		SET_BIT(TIFR , OCF0);		//clear overflow
+
+	}
+}
+
+void APP_SPI_TX(void)
+{
+	LCD_void_Init();
+
+	CLR_BIT(DDR(1),6);	//miso output
+	SET_BIT(DDR(1),5);	//mosi input
+	SET_BIT(DDR(1),7);	//SCK input
+	SET_BIT(DDR(1),4);	//SS input
+
+
+	SPI_Init();
+
+	while(1)
+	{
+
+		//u8 letter= 'a';
+		(void)SPI_TXRX(0x80);
+
+		_delay_ms(1000);
+	}
+}
+
+void APP_SPI_RX(void)
+{
+	DIO_Init();
+	LCD_void_Init();
+
+	SET_BIT(DDR(1),6);	//miso output
+	CLR_BIT(DDR(1),5);	//mosi input
+	CLR_BIT(DDR(1),7);	//SCK input
+	CLR_BIT(DDR(1),4);	//SS input
+	SET_BIT(PORT(1),7);
+
+	SPI_Init();
+
+	while(1)
+	{
+
+
+		u8 letter= 'a';
+		letter = SPI_TXRX(0x80);
+		LCD_void_Data(letter);
+
+		_delay_ms(1000);
+	}
+}
+//---------------------------------------------------------------------
+
+

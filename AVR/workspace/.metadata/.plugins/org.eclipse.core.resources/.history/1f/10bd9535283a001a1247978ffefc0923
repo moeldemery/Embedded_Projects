@@ -1,0 +1,114 @@
+/*
+ * TMR0.c
+ *
+ *  Created on: 18 Jan 2020
+ *      Author: Mohamed
+ */
+
+#include <TMR.h>
+
+#define	TMR_Number_of_groups 3
+
+
+TMR_config_t TMR_groups [1]=
+{
+	{	TIMER_0 , CTC_MODE , PRESCALER_1024	,128 ,DISABLE_TIMER_INT}
+};
+
+
+
+void TMR_Init(void)
+{
+	u8 TCCR0_temp =TCCR0;
+	switch (TMR_groups[0].Timer_mode) {
+		case NORMAL_MODE:
+		{
+			CLR_BIT(TCCR0_temp,WGM00);
+			CLR_BIT(TCCR0_temp,WGM01);
+			break;
+		}
+		case PHASE_PWM_MODE:
+		{
+			SET_BIT(TCCR0_temp,WGM00);
+			CLR_BIT(TCCR0_temp,WGM01);
+			break;
+		}
+		case CTC_MODE:
+		{
+			CLR_BIT(TCCR0_temp,WGM00);
+			SET_BIT(TCCR0_temp,WGM01);
+			OCR0 = TMR_groups[0].Timer_startingValue;
+			break;
+		}
+		case FAST_PWM_MODE:
+		{
+			SET_BIT(TCCR0_temp,WGM00);
+			SET_BIT(TCCR0_temp,WGM01);
+			break;
+		}
+		default:
+			break;
+	}
+
+	switch (TMR_groups[0].Timer_prescaller)
+	{
+		case DISABLE_PRESCALER:
+		{
+			CLR_BIT(TCCR0_temp,CS00);
+			CLR_BIT(TCCR0_temp,CS01);
+			CLR_BIT(TCCR0_temp,CS02);
+			break;
+		}
+		case PRESCALER_1:
+		{
+			SET_BIT(TCCR0_temp,CS00);
+			CLR_BIT(TCCR0_temp,CS01);
+			CLR_BIT(TCCR0_temp,CS02);
+			break;
+		}
+		case PRESCALER_8:
+		{
+			CLR_BIT(TCCR0_temp,CS00);
+			SET_BIT(TCCR0_temp,CS01);
+			CLR_BIT(TCCR0_temp,CS02);
+			break;
+		}
+		case PRESCALER_64:
+		{
+			SET_BIT(TCCR0_temp,CS00);
+			SET_BIT(TCCR0_temp,CS01);
+			CLR_BIT(TCCR0_temp,CS02);
+			break;
+		}
+		case PRESCALER_256:
+		{
+			CLR_BIT(TCCR0_temp,CS00);
+			CLR_BIT(TCCR0_temp,CS01);
+			SET_BIT(TCCR0_temp,CS02);
+			break;
+		}
+		case PRESCALER_1024:
+		{
+			SET_BIT(TCCR0_temp,CS00);
+			CLR_BIT(TCCR0_temp,CS01);
+			SET_BIT(TCCR0_temp,CS02);
+			break;
+		}
+
+		default:
+			break;
+	}
+
+	TCNT0 = 0x0000;
+	TCCR0=TCCR0_temp;
+
+}
+
+void TMR_Disable(void)
+{
+	u8 TCCR0_temp =TCCR0;
+	CLR_BIT(TCCR0_temp,CS00);
+	CLR_BIT(TCCR0_temp,CS01);
+	CLR_BIT(TCCR0_temp,CS02);
+	TCCR0=TCCR0_temp;
+}

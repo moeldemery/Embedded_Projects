@@ -1,0 +1,51 @@
+/*
+ * TMR0.h
+ *
+ *  Created on: 18 Jan 2020
+ *      Author: Mohamed
+ */
+
+#ifndef MCAL_INC_TMR_H_
+#define MCAL_INC_TMR_H_
+
+#include "STD_TYPES.h"
+#include "BIT_MATH.h"
+
+void TMR_Init(void);
+
+#define 		TCCR0	 			*((volatile u8 * ) (0x53))
+	#define 	FOC0 			7
+	#define 	WGM00 			6
+	#define 	COM01 			5
+	#define 	COM00 			4
+	#define 	WGM01 			3
+	#define 	CS02 			2
+	#define 	CS01 			1
+	#define 	CS00 			0
+
+#define 		TCNT0	 			*((volatile u16 * ) (0x52))
+#define 		OCR0	 			*((volatile u8 * ) (0x5C))
+#define 		TIMSK	 			*((volatile u8 * ) (0x59))
+	#define 	OCIE0 			1
+	#define 	TOIE0 			0
+
+#define 		TIFR	 			*((volatile u8 * ) (0x58))
+	#define 	TOV0 			0
+	#define 	OCF0 			1
+
+typedef enum {TIMER_0,TIMER1,TIMER2} Timer_select_t ;
+typedef enum {NORMAL_MODE,PHASE_PWM_MODE,CTC_MODE,FAST_PWM_MODE} Timer_mode_t ;
+typedef enum {DISABLE_PRESCALER,PRESCALER_1,PRESCALER_8,PRESCALER_64,PRESCALER_256,PRESCALER_1024,EXTERNAL_CLK_SOURCE} Timer_prescaller_t ;
+typedef enum {DISABLE_TIMER_INT,COMPARE_INT_ENABLE,OVERFLOW_INT_ENABLE,OVERFLOW_COMPARE_INT_ENABLE} Timer_intrrupt_t ;
+
+typedef struct
+{
+	Timer_select_t			Timer_select;
+	Timer_mode_t 			Timer_mode;
+	Timer_prescaller_t		Timer_prescaller;
+	u8						Timer_startingValue;
+	Timer_intrrupt_t		Timer_intrrupt;
+
+}TMR_config_t;
+
+#endif /* MCAL_INC_TMR_H_ */

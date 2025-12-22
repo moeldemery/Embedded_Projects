@@ -1,0 +1,11 @@
+/*
+ * DIO_driver.c
+ *
+ *  Created on: 14 Jan 2020
+ *      Author: Mohamed
+ */
+#include "DIO_driver.h"
+#include "../../UTILITIES/STD_TYPES.h"
+
+
+//DIO_config_t DIO_groups ={};

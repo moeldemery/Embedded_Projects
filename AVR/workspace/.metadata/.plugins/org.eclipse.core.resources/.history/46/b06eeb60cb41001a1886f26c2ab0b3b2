@@ -1,0 +1,140 @@
+/*
+ * LCD_driver.c
+ *
+ *  Created on: 15 Jan 2020
+ *      Author: Mohamed
+ */
+
+#include "../INC/LCD_driver.h"
+
+
+extern DIO_config_t DIO_groups [DIO_Number_of_groups];
+extern LCD_config_t LCD_config_groups[];
+
+#define EN_GP   	LCD_config_groups[0].LCD_En_Group_Number
+#define RS_GP   	LCD_config_groups[0].LCD_Rs_Group_Number
+#define RW_GP   	LCD_config_groups[0].LCD_Rw_Group_Number
+#define MODE_GP 	LCD_config_groups[0].LCD_MODE_4_OR_8
+#define DATA_GP 	LCD_config_groups[0].LCD_DATA_Group_Number
+
+#define LCD_PIN_SHIFT 4
+
+//void LCD_void_SendCMD(u8 order);
+//void LCD_void_SendData(u8 data_byte);
+
+void LCD_busy(void)
+{
+    CLR_BIT(DDR(DIO_groups[DATA_GP].port_id) , LCD_PIN_SHIFT) ;
+    //while(GET_BIT(PORT(DIO_groups[DATA_GP].port_id) ,LCD_PIN_SHIFT ) );
+
+    DIO_Write(0X00,EN_GP);
+    SET_BIT(DDR(DIO_groups[DATA_GP].port_id), LCD_PIN_SHIFT);
+
+}
+void LCD_void_CMD(u8 order)
+{
+	LCD_busy();
+	DIO_Write((order),DATA_GP);
+	DIO_Write(0XFF,EN_GP);
+	_delay_ms(1);
+	DIO_Write(0X00,EN_GP);
+
+	_delay_ms(2);
+
+	DIO_Write((order<<LCD_PIN_SHIFT),DATA_GP);
+	DIO_Write(0XFF,EN_GP);
+	_delay_ms(1);
+	DIO_Write(0X00,EN_GP);
+
+	_delay_ms(2);
+}
+
+void LCD_void_Data(u8 data_byte)
+{
+	LCD_busy();
+
+	DIO_Write((data_byte),DATA_GP);
+	DIO_Write(0XFF,RS_GP);
+	DIO_Write(0XFF,EN_GP);
+	_delay_ms(1);
+	DIO_Write(0X00,EN_GP);
+
+	DIO_Write((data_byte<<LCD_PIN_SHIFT),DATA_GP);
+	DIO_Write(0XFF,EN_GP);
+	_delay_ms(1);
+	DIO_Write(0X00,EN_GP);
+	//_delay_ms(100);
+	DIO_Write(0X00,RS_GP);
+}
+void LCD_void_Init(void)
+{
+
+	_delay_ms(2000);
+
+	DIO_Write(0X00,EN_GP);
+
+	LCD_void_CMD(0x33);
+	LCD_void_CMD(0x32);
+	LCD_void_CMD(0x28);
+	LCD_void_CMD(0x0C);
+	LCD_void_CMD(0x01);
+	_delay_ms(50);
+	LCD_void_CMD(0x06);
+}
+
+
+
+void LCD_void_SendString (u8 *s)
+{
+	while(*s)
+	{
+		LCD_void_Data(*s);
+		s++;
+	}
+}
+
+void LCD_GoTO(u8 x,u8 y)
+{
+	u8 First_Char_Address []={0X80,0XC0,0X94,0XD4};
+	LCD_void_CMD(First_Char_Address[y-1]+x-1);
+	_delay_ms(100);
+}
+
+void LCD_Clear(void)
+{
+	LCD_void_CMD(0x01);
+}
+void LCD_On(void)
+{
+	LCD_void_CMD(0x0E);
+}
+void LCD_Off(void)
+{
+	LCD_void_CMD(0x08);
+}
+void LCD_Shift_Right(void)
+{
+	LCD_void_CMD(0x1c);
+}
+void LCD_Shift_Left(void)
+{
+	LCD_void_CMD(0x1b);
+}
+
+
+void LCD_Special_Char(u8* customChar,u8 index)
+{
+	LCD_void_CMD(0x40+(index*8));
+	//LCD_void_CMD(0x00);
+
+	u8 loop;
+	for (loop = 0; loop < 8; ++loop)
+	{
+		LCD_void_Data(customChar[loop]);
+	}
+	LCD_void_CMD(0x00+(index));
+	//LCD_void_CMD(0x80);
+
+}
+
+

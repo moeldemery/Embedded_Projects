@@ -1,0 +1,80 @@
+/*
+ * main.c
+ *
+ *  Created on: 31 Dec 2019
+ *      Author: Mohamed
+ */
+
+
+
+#include "UTILITIES/STD_TYPES.h"
+#include "UTILITIES/BIT_MATH.h"
+
+#include "MCAL/INC/DIO_driver.h"
+#include "MCAL/INC/UART_driver.h"
+#include "MCAL/INC/INT_interface.h"
+#include "MCAL/INC/TMR.h"
+#include "MCAL/INC/SPI.h"
+
+#include "HAL/INC/LED.h"
+#include "HAL/INC/BTN.h"
+#include "HAL/INC/LCD_driver.h"
+#include "HAL/INC/KPD.h"
+#include "HAL/INC/SVNSEG.h"
+
+#include "APP/APP_UnitTesting.h"
+#include "APP/APP_Calc.h"
+
+#include <util/delay.h>
+
+
+
+
+int main(void)
+{
+	DIO_Init();
+	LCD_void_Init();
+	//INT_Void_ExternalIntInit(EXT_INT_0);
+
+	//APP_UART_LCD();
+	//APP_UART_virtual();
+	//APP_BTN_Toggle_LED();
+	//APP_Counter_2SvnSeg_2Btn_3Led();
+
+	//APP_LCD_shifting_2BTN();
+
+	//APP_TMR0_polling_CTC_cmpmatch_toggle_LED1();
+
+	SPI_Init();
+
+	while(1)
+	{
+		//CALC_SreenRefresh();
+		//CALC_getNumber();
+		u8 letter= SPI_RX();
+		LCD_void_Data(letter);
+
+	}
+
+
+
+	return 0 ;
+}
+
+
+
+
+
+
+/*
+ISR(1)
+{
+
+	LED1_On();
+	_delay_ms(1000);
+	LED1_Off();
+}
+*/
+
+
+

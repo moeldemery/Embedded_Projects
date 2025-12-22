@@ -1,0 +1,19 @@
+
+
+#include "BIT_MATH.h"
+#include "STD_TYPES.h"
+
+#include "USART.h"
+
+ void USART_void_Init(void)
+ {
+	 SET_BIT(USART1->CR1, 0);
+
+	 USART1->BRR=0x340; //9600 boud
+ }
+
+ void USART_void_tx(u8 Copy_datatx)
+ {
+	 USART1->DR = Copy_datatx;
+
+ }

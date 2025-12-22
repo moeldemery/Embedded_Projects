@@ -1,0 +1,22 @@
+14:20:10 **** Incremental Build of configuration Debug for project wifi_test2 ****
+make all 
+Building target: wifi_test2.elf
+Invoking: Cross ARM GNU C++ Linker
+arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Og -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -ffreestanding -fno-move-loop-invariants -Wall -Wextra  -g3 -T mem.ld -T libs.ld -T sections.ld -nostartfiles -Xlinker --gc-sections -L"../ldscripts" -L"D:\iti\ARM\wifi_test2\lib\c-circus" -L"D:\iti\ARM\wifi_test2\lib\esp8266driver" -L"D:\iti\ARM\wifi_test2\lib\FreeRTOS_Source" -L"D:\iti\ARM\wifi_test2\lib\mculibs" -L"D:\iti\ARM\wifi_test2\lib\MQTTPacket" -L"D:\iti\ARM\wifi_test2\system\include\stm32f1-stdperiph" -L"D:\iti\ARM\wifi_test2\system\include\stm32f1-stdperiph" -Wl,-Map,"wifi_test2.map" --specs=nano.specs -o "wifi_test2.elf"  ./src/stm32f1-stdperiph/misc.o ./src/stm32f1-stdperiph/stm32f10x_adc.o ./src/stm32f1-stdperiph/stm32f10x_bkp.o ./src/stm32f1-stdperiph/stm32f10x_can.o ./src/stm32f1-stdperiph/stm32f10x_cec.o ./src/stm32f1-stdperiph/stm32f10x_crc.o ./src/stm32f1-stdperiph/stm32f10x_dac.o ./src/stm32f1-stdperiph/stm32f10x_dbgmcu.o ./src/stm32f1-stdperiph/stm32f10x_dma.o ./src/stm32f1-stdperiph/stm32f10x_exti.o ./src/stm32f1-stdperiph/stm32f10x_flash.o ./src/stm32f1-stdperiph/stm32f10x_fsmc.o ./src/stm32f1-stdperiph/stm32f10x_gpio.o ./src/stm32f1-stdperiph/stm32f10x_i2c.o ./src/stm32f1-stdperiph/stm32f10x_iwdg.o ./src/stm32f1-stdperiph/stm32f10x_pwr.o ./src/stm32f1-stdperiph/stm32f10x_rcc.o ./src/stm32f1-stdperiph/stm32f10x_rtc.o ./src/stm32f1-stdperiph/stm32f10x_sdio.o ./src/stm32f1-stdperiph/stm32f10x_spi.o ./src/stm32f1-stdperiph/stm32f10x_tim.o ./src/stm32f1-stdperiph/stm32f10x_usart.o ./src/stm32f1-stdperiph/stm32f10x_wwdg.o  ./src/newlib/_cxx.o ./src/newlib/_exit.o ./src/newlib/_sbrk.o ./src/newlib/_startup.o ./src/newlib/_syscalls.o ./src/newlib/assert.o  ./src/diag/Trace.o ./src/diag/trace_impl.o  ./src/cortexm/_initialize_hardware.o ./src/cortexm/_reset_hardware.o ./src/cortexm/exception_handlers.o  ./src/cmsis/system_stm32f10x.o ./src/cmsis/vectors_stm32f10x.o  ./src/ESP8266Client.o ./src/MQTTConnectClient.o ./src/MQTTConnectServer.o ./src/MQTTDeserializePublish.o ./src/MQTTFormat.o ./src/MQTTPacket.o ./src/MQTTSerializePublish.o ./src/MQTTSubscribeClient.o ./src/MQTTSubscribeServer.o ./src/MQTTUnsubscribeClient.o ./src/MQTTUnsubscribeServer.o ./src/_write.o ./src/croutine.o ./src/event_groups.o ./src/heap_1.o ./src/led.o ./src/list.o ./src/main.o ./src/networkwrapper.o ./src/port.o ./src/queue.o ./src/stream_buffer.o ./src/tasks.o ./src/temperature.o ./src/timers.o ./src/transport.o   
+./src/ESP8266Client.o: In function `ESP82_sendCmd':
+D:\iti\ARM\wifi_test2\Debug/../src/ESP8266Client.c:142: undefined reference to `CircularUART_Send'
+D:\iti\ARM\wifi_test2\Debug/../src/ESP8266Client.c:134: undefined reference to `CircularUART_ClearRx'
+D:\iti\ARM\wifi_test2\Debug/../src/ESP8266Client.c:135: undefined reference to `CircularUART_ClearTx'
+./src/ESP8266Client.o: In function `ESP82_checkResponse':
+D:\iti\ARM\wifi_test2\Debug/../src/ESP8266Client.c:192: undefined reference to `CircularUART_Receive'
+./src/ESP8266Client.o: In function `ESP82_Receive':
+D:\iti\ARM\wifi_test2\Debug/../src/ESP8266Client.c:593: undefined reference to `CircularUART_Receive'
+./src/ESP8266Client.o: In function `ESP82_Init':
+D:\iti\ARM\wifi_test2\Debug/../src/ESP8266Client.c:396: undefined reference to `CircularUART_Init'
+D:\iti\ARM\wifi_test2\Debug/../src/ESP8266Client.c:397: undefined reference to `CircularUART_StartRx'
+D:\iti\ARM\wifi_test2\Debug/../src/ESP8266Client.c:398: undefined reference to `CircularUART_StartTx'
+collect2.exe: error: ld returned 1 exit status
+make: *** [makefile:64: wifi_test2.elf] Error 1
+
+14:20:13 Build Finished (took 2s.378ms)
+

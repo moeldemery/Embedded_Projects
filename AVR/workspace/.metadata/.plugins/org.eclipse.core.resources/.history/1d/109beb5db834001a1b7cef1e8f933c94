@@ -1,0 +1,103 @@
+/*
+ * main.c
+ *
+ *  Created on: 31 Dec 2019
+ *      Author: Mohamed
+ */
+
+
+
+#ifndef F_CPU
+#define F_CPU 8000000LU
+#endif
+
+#include "STD_TYPES.h"
+#include "BIT_MATH.h"
+
+#include "MCAL/INC/DIO_interface.h"
+#include "MCAL/INC/INT_interface.h"
+
+#include <util/delay.h>
+
+
+void LED_Init(void);
+void LED_On(void);
+void LED_Off(void);
+void BTN_Init(void);
+u8 BTN_GetValue(void);
+
+
+
+int main(void)
+{
+	static int alx=0;
+	/*
+
+	//DDRA = 0b00000001;
+	LED_Init();
+	BTN_Init();
+
+	while(1)
+	{
+
+		if(BTN_GetValue())
+		{
+			LED_Off();
+		}
+		else
+		{
+			LED_On();
+		}
+	}
+*/
+
+	LED_Init();
+	INT_Void_ExternalIntInit(EXT_INT_0);
+
+	while(1)
+	{
+
+	}
+
+	return 0 ;
+}
+
+ISR(1)
+{
+	/*
+	LED_On();
+	_delay_ms(1000);
+	LED_Off();*/
+}
+
+
+
+
+
+void LED_Init(void)
+{
+	DIO_EnumSetPinDirection(DIO_DDRD,DIO_PIN_0,DIO_PIN_OUTPUT);
+	DIO_EnumSetPinValue(DIO_PORTD,DIO_PIN_0,DIO_PIN_HIGH);
+}
+
+void LED_On(void)
+{
+	DIO_EnumSetPinValue(DIO_PORTD,DIO_PIN_0,DIO_PIN_HIGH);
+}
+
+void LED_Off(void)
+{
+	DIO_EnumSetPinValue(DIO_PORTD,DIO_PIN_0,DIO_PIN_LOW);
+}
+
+void BTN_Init(void)
+{
+	DIO_EnumSetPinDirection(DIO_DDRB,DIO_PIN_7,DIO_PIN_INPUT);
+	DIO_EnumSetPinValue(DIO_PORTB,DIO_PIN_7,DIO_PIN_HIGH);
+}
+u8 BTN_GetValue(void)
+{
+	u8 local_u8Switch=0;
+	DIO_EnumGetPinValue(DIO_PORTB,DIO_PIN_7,&local_u8Switch);
+	return local_u8Switch;
+}

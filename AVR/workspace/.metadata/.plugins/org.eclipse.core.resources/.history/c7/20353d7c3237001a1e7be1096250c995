@@ -1,0 +1,33 @@
+/*
+ * UART_driver.h
+ *
+ *  Created on: 15 Jan 2020
+ *      Author: Mohamed
+ */
+
+#ifndef MCAL_INC_UART_DRIVER_H_
+#define MCAL_INC_UART_DRIVER_H_
+#include "STD_TYPES.h"
+
+#define UBRRH 			*((volatile u8 * ) (0x20))
+
+typedef enum {RX_EN,TX_EN,RX_TX_EN} enable_t ;
+typedef enum {UART_MODE , USART_MODE } UART_USART_t ;
+typedef enum {DATA_5_BIT , DATA_6_BIT,DATA_7_BIT,DATA_8_BIT,DATA_9_BIT } dataFrame_t ;
+typedef enum {DISABLE_PARITY , EVEN_PARITY , ODD_PARITY } parityBits_t ;
+typedef enum {ENDING_1_BIT , ENDING_2_BIT } endingBits_t ;
+typedef enum {RISING_TX_FALLING_RX , FALLING_TX_RISING_RX } clockPolarity_t ;
+
+typedef struct
+{
+	enable_t 		enable;
+	UART_USART_t	UART_USART;
+	dataFrame_t		dataFrame;
+	parityBits_t	parity;
+	endingBits_t	endingBits;
+	clockPolarity_t	clockPolarity;
+	u16				BoadRate;
+
+}UASRT_config_t;
+
+#endif /* MCAL_INC_UART_DRIVER_H_ */

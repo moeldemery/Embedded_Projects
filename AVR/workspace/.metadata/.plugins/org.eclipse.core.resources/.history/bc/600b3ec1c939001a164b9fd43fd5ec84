@@ -1,0 +1,43 @@
+/*
+ * TMR0.h
+ *
+ *  Created on: 18 Jan 2020
+ *      Author: Mohamed
+ */
+
+#ifndef MCAL_INC_TMR_H_
+#define MCAL_INC_TMR_H_
+
+#include "STD_TYPES.h"
+#include "BIT_MATH.h"
+
+#define 		TCCR0	 			*((volatile u8 * ) (0x25))
+	#define 	FOC0 			7
+	#define 	WGM00 			6
+	#define 	COM01 			5
+	#define 	COM00 			4
+	#define 	WGM01 			3
+	#define 	CS02 			2
+	#define 	CS01 			1
+	#define 	CS00 			0
+
+#define 		TCNT0	 			*((volatile u8 * ) (0x24))
+#define 		OCR0	 			*((volatile u8 * ) (0x23))
+#define 		TIMSK	 			*((volatile u8 * ) (0x37))
+	#define 	OCIE0 			1
+	#define 	TOIE0 			0
+
+#define 		TIFR	 			*((volatile u8 * ) (0x36))
+	#define 	TOV0 			1
+	#define 	OCF0 			0
+
+
+typedef enum {NORMAL_MODE,PHASE_PWM_MODE,CTC_MODE,FAST_PWM_MODE} Timer_mode ;
+typedef struct
+{
+	Timer_mode_t 				Timer_mode;
+	u8					Prescaler;
+
+}TMR_config_t;
+
+#endif /* MCAL_INC_TMR_H_ */

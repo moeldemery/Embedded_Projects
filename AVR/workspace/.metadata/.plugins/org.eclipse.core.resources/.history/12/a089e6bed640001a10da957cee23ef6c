@@ -1,0 +1,11 @@
+/*
+ * SPI.c
+ *
+ *  Created on: 27 Jan 2020
+ *      Author: Mohamed
+ */
+
+#include "SPI.h"
+
+SPI_config_t SPI_group = {	SPI_EN , SPI_SLAVE	,SPI_MSB_FIRST,SPI_LEADING_EDGE_RISING,SPI_LEADING_EDGE_SAMPLING,SPI_F_4,SPI_INT_DISABLE};
+

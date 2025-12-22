@@ -1,0 +1,64 @@
+/*
+ * LCD_driver.c
+ *
+ *  Created on: 15 Jan 2020
+ *      Author: Mohamed
+ */
+
+#include "../INC/LCD_driver.h"
+#include "DIO_driver.h"
+
+
+extern LCD_config_t LCD_config_groups[];
+
+#define EN_GP   	LCD_config_groups[0].LCD_En_Group_Number
+#define RS_GP   	LCD_config_groups[0].LCD_RS_Group_Number
+#define RW_GP   	LCD_config_groups[0].LCD_RW_Group_Number
+#define MODE_GP 	LCD_config_groups[0].LCD_MODE_4_OR_8
+#define DATA_GP 	LCD_config_groups[0].LCD_DATA_Group_Number
+
+#define LCD_PIN_SHIFT 4
+
+void LCD_void_Init(void)
+{
+	_delay_ms(2000);
+	DIO_Write(0X00,EN_GP);
+	LCD_void_SendCMD(0x33);
+	LCD_void_SendCMD(0x32);
+	LCD_void_SendCMD(0x28);
+	LCD_void_SendCMD(0x0e);
+	LCD_void_SendCMD(0x01);
+	_delay_ms(2000);
+	LCD_void_SendCMD(0x06);
+}
+
+void LCD_void_SendCMD(unsigned char order)
+{
+	DIO_Write((order<<LCD_PIN_SHIFT),DATA_GP);
+	DIO_Write(0XFF,EN_GP);
+	_delay_ms(1);
+	DIO_Write(0X00,EN_GP);
+
+	_delay_ms(100);
+}
+
+
+void LCD_void_SendData(unsigned char data_byte)
+{
+	DIO_Write((data_byte),DATA_GP);
+	DIO_Write(0XFF,RS_GP);
+	DIO_Write(0XFF,EN_GP);
+	_delay_ms(1);
+	DIO_Write(0X00,EN_GP);
+
+	DIO_Write((data_byte<<LCD_PIN_SHIFT),DATA_GP);
+	DIO_Write(0XFF,EN_GP);
+	_delay_ms(1);
+	DIO_Write(0X00,EN_GP);
+	_delay_ms(100);
+	DIO_Write(0X00,RS_GP);
+}
+void LCD_void_SendString (unsigned char *s)
+{
+
+}

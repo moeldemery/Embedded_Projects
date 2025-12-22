@@ -1,0 +1,27 @@
+/*
+ * INT_interface.h
+ *
+ *  Created on: 11 Jan 2020
+ *      Author: Mohamed
+ */
+
+#ifndef MCAL_INC_INT_INTERFACE_H_
+#define MCAL_INC_INT_INTERFACE_H_
+
+#include "STD_TYPES.h"
+#include "BIT_MATH.h"
+#include "INT_register.h"
+#include "DIO_interface.h"
+
+void INT_Void_ExternalIntInit(u8 Copy_u8_ChannelNo);
+
+
+void __vector_1 (void) __attribute__ ((signal));
+
+void __vector_1 (void)
+{
+
+}
+
+
+#endif /* MCAL_INC_INT_INTERFACE_H_ */

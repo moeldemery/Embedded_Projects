@@ -1,0 +1,73 @@
+/********************************************************
+ * Author 	: Mody										*
+ * Version	: V01										*
+ * Data		: 31 Jan 2020								*
+ *******************************************************/
+ 
+#include "STD_TYPES.h"
+#include "BIT_MATH.h"
+
+#include "NVIC_interface.h"
+#include "NVIC_private.h"
+#include "NVIC_config.h"
+
+void NVIC_voidEnableInt (u8 Copy_u8Idx)
+{
+	if( Copy_u8Idx<=31)			//if(Copy_u8Idx>0 && Copy_u8Idx<=31) >> Not u8 is unsigned (it will be always > 0)
+	{
+		NVIC_ISER0 = (1<<Copy_u8Idx);
+	}
+	else if( Copy_u8Idx<=59)		//else if(Copy_u8Idx>=32 && Copy_u8Idx<=59)
+	{
+		Copy_u8Idx = Copy_u8Idx - 32;
+		NVIC_ISER1 = (1<<Copy_u8Idx);
+	}
+}
+void NVIC_voidDisableInt(u8 Copy_u8Idx)
+{
+	if( Copy_u8Idx<=31)			//if(Copy_u8Idx>0 && Copy_u8Idx<=31) >> Not u8 is unsigned (it will be always > 0)
+	{
+		NVIC_ICER0 = (1<<Copy_u8Idx);
+	}
+	else if( Copy_u8Idx<=59)		//else if(Copy_u8Idx>=32 && Copy_u8Idx<=59)
+	{
+		Copy_u8Idx = Copy_u8Idx - 32;
+		NVIC_ICER1 = (1<<Copy_u8Idx);
+	}
+}
+/**************************************************************************/
+void NVIC_voidSetPendingFlag(u8 Copy_u8Idx)
+{
+	if( Copy_u8Idx<=31)			//if(Copy_u8Idx>0 && Copy_u8Idx<=31) >> Not u8 is unsigned (it will be always > 0)
+	{
+		NVIC_ISPR0 = (1<<Copy_u8Idx);
+	}
+	else if( Copy_u8Idx<=59)		//else if(Copy_u8Idx>=32 && Copy_u8Idx<=59)
+	{
+		Copy_u8Idx = Copy_u8Idx - 32;
+		NVIC_ISPR1 = (1<<Copy_u8Idx);
+	}
+}
+/**************************************************************************/
+void NVIC_voidClrPendingFlag(u8 Copy_u8Idx)
+{
+	if( Copy_u8Idx<=31)			//if(Copy_u8Idx>0 && Copy_u8Idx<=31) >> Not u8 is unsigned (it will be always > 0)
+	{
+		NVIC_ICPR0 = (1<<Copy_u8Idx);
+	}
+	else if( Copy_u8Idx<=59)		//else if(Copy_u8Idx>=32 && Copy_u8Idx<=59)
+	{
+		Copy_u8Idx = Copy_u8Idx - 32;
+		NVIC_ICPR1 = (1<<Copy_u8Idx);
+	}
+}
+/**************************************************************************/
+void NVIC_Initialization(u8 Copy_u8Idx)		//Group Setting
+{
+	SCB_AIRCB = 0X05FA0500;
+}
+/****************************************************************************/
+void NVIC_voidSetIntPriority(u8 Copy_u8Idx , u8 Copy_u8Priority)
+{
+	NVIC_IPR[Copy_u8Idx] = Copy_u8Priority;
+}

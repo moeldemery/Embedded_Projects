@@ -1,0 +1,31 @@
+/*
+ * DIO_driver.h
+ *
+ *  Created on: 14 Jan 2020
+ *      Author: Mohamed
+ */
+
+#ifndef MCAL_INC_DIO_DRIVER_H_
+#define MCAL_INC_DIO_DRIVER_H_
+
+#include "STD_TYPES.h"
+
+#define NUMBER_OF_PORTS 	4
+
+#define PORT(x) 				(*(volatile u8 * ) (0x3B)-(3*x))
+#define DDR(x)	 				(*(volatile u8 * ) (0x3A)-(3*x))
+#define PIN(x) 					(*(volatile u8 * ) (0x39)-(3*x))
+
+typedef struct
+{
+	u8 		port_id;
+	u8		mask;
+	u8 		direction;
+	u8		pull_up_reg;
+
+}DIO_config_t;
+
+#define PULL_UP_ENABLE 		1
+#define PULL_UP_DISABLE 	0
+
+#endif /* 1_MCAL_INC_DIO_DRIVER_H_ */

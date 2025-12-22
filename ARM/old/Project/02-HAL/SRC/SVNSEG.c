@@ -1,0 +1,32 @@
+/*
+ * SVNSEG.c
+ *
+ *  Created on: 16 Jan 2020
+ *      Author: Mohamed
+ */
+
+#include "../INC/SVNSEG.h"
+
+void SVNSEG_Display(u8 number)
+{
+	DIO_Write(number<<SEVEN_SEG_PIN,GRP_4_SEG1);
+}
+
+void SVNSEG1_EN(void)
+{
+	DIO_Write(HIGH,GRP_5_SEG1_EN);
+}
+
+void SVNSEG1_DEN(void)
+{
+	DIO_Write(LOW,GRP_5_SEG1_EN);
+}
+
+void SVNSEG2_EN(void)
+{
+	DIO_Write(HIGH,GRP_6_SEG2_EN);
+}
+void SVNSEG2_DEN(void)
+{
+	DIO_Write(LOW,GRP_6_SEG2_EN);
+}

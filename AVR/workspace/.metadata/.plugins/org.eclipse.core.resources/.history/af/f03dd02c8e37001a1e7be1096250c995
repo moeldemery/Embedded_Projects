@@ -1,0 +1,29 @@
+/*
+ * LCD_driver.h
+ *
+ *  Created on: 15 Jan 2020
+ *      Author: Mohamed
+ */
+
+#ifndef HAL_INC_LCD_DRIVER_H_
+#define HAL_INC_LCD_DRIVER_H_
+
+#include "STD_TYPES.h"
+
+typedef enum {MODE_4_BITS , MODE_8_BITS } data_bits_t ;
+typedef struct
+{
+	Port_t 				port_id;
+	u8					mask;
+	Direction_t 		direction;
+	PullUpEnable_t		data_bits_t;
+
+}LCD_config_t;
+
+void LCD_void_Init(void);
+void LCD_void_SendCMD(unsigned char order);
+void LCD_void_SendData(unsigned char data_byte);
+void LCD_void_SendString (unsigned char *s);
+
+
+#endif /* HAL_INC_LCD_DRIVER_H_ */

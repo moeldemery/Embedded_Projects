@@ -1,0 +1,12 @@
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86_64
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/name=Local
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=win32
+configDescList=org.eclipse.launchbar.core.descriptorType.default\:ARM_STM_32f103.elf,org.eclipse.launchbar.core.descriptorType.default\:ARM_STM_32f103 Debug,org.eclipse.launchbar.core.descriptorType.default\:ARM_MODEL.elf,org.eclipse.launchbar.core.descriptorType.default\:ARM_MODEL Debug,org.eclipse.launchbar.core.descriptorType.default\:ITI_GP.elf,org.eclipse.launchbar.core.descriptorType.default\:ITI_GP Debug
+eclipse.preferences.version=1
+org.eclipse.launchbar.core.descriptorType.default\:ARM_MODEL\ Debug/activeLaunchMode=run
+org.eclipse.launchbar.core.descriptorType.default\:ARM_MODEL\ Debug/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
+org.eclipse.launchbar.core.descriptorType.default\:ARM_STM_32f103\ Debug/activeLaunchMode=debug
+org.eclipse.launchbar.core.descriptorType.default\:ARM_STM_32f103\ Debug/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
+org.eclipse.launchbar.core.descriptorType.default\:ARM_STM_32f103.elf/activeLaunchMode=run
+org.eclipse.launchbar.core.descriptorType.default\:ARM_STM_32f103.elf/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
+org.eclipse.launchbar.core.descriptorType.default\:ITI_GP.elf/activeLaunchMode=debug

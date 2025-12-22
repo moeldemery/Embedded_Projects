@@ -1,0 +1,9 @@
+/*
+ * UART_driver.c
+ *
+ *  Created on: 15 Jan 2020
+ *      Author: Mohamed
+ */
+
+
+UASRT_config_t UART_group ={};

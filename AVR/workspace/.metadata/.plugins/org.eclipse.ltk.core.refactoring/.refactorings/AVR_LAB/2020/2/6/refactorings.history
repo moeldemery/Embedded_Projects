@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;AVR_LAB/MCAL/INC/TTWI.h&apos; to &apos;TWI.h&apos;" description="Rename resource &apos;TTWI.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="MCAL/INC/TTWI.h" name="TWI.h" stamp="1580893144839" updateReferences="true"/>
+</session>

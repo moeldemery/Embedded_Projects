@@ -1,0 +1,21 @@
+/*
+ * DIO_driver.h
+ *
+ *  Created on: 14 Jan 2020
+ *      Author: Mohamed
+ */
+
+#ifndef 1_MCAL_INC_DIO_DRIVER_H_
+#define 1_MCAL_INC_DIO_DRIVER_H_
+
+#include "STD_TYPES.h"
+
+#define NUMBER_OF_PORTS 	4
+
+#define PORT(x) 				(*(volatile u8 * ) (0x3B)-(3*x))
+#define DDR(x)	 				(*(volatile u8 * ) (0x3A)-(3*x))
+#define PIN(x) 					(*(volatile u8 * ) (0x39)-(3*x))
+
+
+
+#endif /* 1_MCAL_INC_DIO_DRIVER_H_ */

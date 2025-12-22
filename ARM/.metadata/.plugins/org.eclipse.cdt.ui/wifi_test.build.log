@@ -1,0 +1,28 @@
+03:44:38 **** Incremental Build of configuration Debug for project wifi_test ****
+make all 
+Building file: ../src/bsp_usart.c
+Invoking: Cross ARM GNU C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m3 -mthumb -Og -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -ffreestanding -fno-move-loop-invariants -Wall -Wextra  -g3 -DDEBUG -DUSE_FULL_ASSERT -DTRACE -DOS_USE_TRACE_SEMIHOSTING_DEBUG -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -DHSE_VALUE=8000000 -I"../include" -I"../system/include" -I"../system/include/cmsis" -I"../system/include/stm32f1-stdperiph" -std=gnu11 -MMD -MP -MF"src/bsp_usart.d" -MT"src/bsp_usart.o" -c -o "src/bsp_usart.o" "../src/bsp_usart.c"
+Finished building: ../src/bsp_usart.c
+ 
+Building target: wifi_test.elf
+Invoking: Cross ARM GNU C++ Linker
+arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Og -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -ffreestanding -fno-move-loop-invariants -Wall -Wextra  -g3 -T mem.ld -T libs.ld -T sections.ld -nostartfiles -Xlinker --gc-sections -L"../ldscripts" -Wl,-Map,"wifi_test.map" --specs=nano.specs -o "wifi_test.elf"  ./system/src/stm32f1-stdperiph/misc.o ./system/src/stm32f1-stdperiph/stm32f10x_gpio.o ./system/src/stm32f1-stdperiph/stm32f10x_rcc.o  ./system/src/newlib/_cxx.o ./system/src/newlib/_exit.o ./system/src/newlib/_sbrk.o ./system/src/newlib/_startup.o ./system/src/newlib/_syscalls.o ./system/src/newlib/assert.o  ./system/src/diag/Trace.o ./system/src/diag/trace_impl.o  ./system/src/cortexm/_initialize_hardware.o ./system/src/cortexm/_reset_hardware.o ./system/src/cortexm/exception_handlers.o  ./system/src/cmsis/system_stm32f10x.o ./system/src/cmsis/vectors_stm32f10x.o  ./src/bsp_clkconfig.o ./src/bsp_gpio.o ./src/bsp_led.o ./src/bsp_systick2.o ./src/bsp_systick_wifi.o ./src/bsp_usart.o ./src/bsp_usart1.o ./src/bsp_usart2.o ./src/main.o ./src/stm32f10x_it.o ./src/wifi_config.o ./src/wifi_function.o   
+./src/bsp_usart.o: In function `USART_Config':
+D:\iti\ARM\wifi_test\Debug/../src/bsp_usart.c:59: undefined reference to `USART_Init'
+D:\iti\ARM\wifi_test\Debug/../src/bsp_usart.c:65: undefined reference to `USART_ITConfig'
+D:\iti\ARM\wifi_test\Debug/../src/bsp_usart.c:68: undefined reference to `USART_Cmd'
+./src/bsp_usart.o: In function `USART1_IRQHandler':
+D:\iti\ARM\wifi_test\Debug/../src/bsp_usart.c:99: undefined reference to `USART_GetITStatus'
+D:\iti\ARM\wifi_test\Debug/../src/bsp_usart.c:100: undefined reference to `USART_ReceiveData'
+D:\iti\ARM\wifi_test\Debug/../src/bsp_usart.c:101: undefined reference to `USART_SendData'
+./src/stm32f10x_it.o: In function `USART2_IRQHandler':
+D:\iti\ARM\wifi_test\Debug/../src/stm32f10x_it.c:156: undefined reference to `USART_GetITStatus'
+D:\iti\ARM\wifi_test\Debug/../src/stm32f10x_it.c:167: undefined reference to `USART_GetITStatus'
+D:\iti\ARM\wifi_test\Debug/../src/stm32f10x_it.c:158: undefined reference to `USART_ReceiveData'
+D:\iti\ARM\wifi_test\Debug/../src/stm32f10x_it.c:171: undefined reference to `USART_ReceiveData'
+collect2.exe: error: ld returned 1 exit status
+make: *** [makefile:64: wifi_test.elf] Error 1
+
+03:44:40 Build Finished (took 1s.827ms)
+

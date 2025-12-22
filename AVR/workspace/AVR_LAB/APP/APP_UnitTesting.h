@@ -1,0 +1,40 @@
+/*
+ * APP_UnitTesting.h
+ *
+ *  Created on: 16 Jan 2020
+ *      Author: Mohamed
+ */
+
+#ifndef APP_APP_UNITTESTING_H_
+#define APP_APP_UNITTESTING_H_
+
+#include "../UTILITIES/STD_TYPES.h"
+#include "../UTILITIES/BIT_MATH.h"
+
+#include "../MCAL/INC/DIO_driver.h"
+#include "../MCAL/INC/UART_driver.h"
+#include "../MCAL/INC/INT_interface.h"
+#include "../MCAL/INC/TMR.h"
+#include "../MCAL/INC/SPI.h"
+#include "../MCAL/INC/ADC.h"
+
+#include "../HAL/INC/LED.h"
+#include "../HAL/INC/BTN.h"
+#include "../HAL/INC/LCD_driver.h"
+#include "../HAL/INC/SVNSEG.h"
+#include "../HAL/INC/KPD.h"
+
+#include <util/delay.h>
+
+void APP_BTN_Toggle_LED(void);
+void APP_Counter_2SvnSeg_2Btn_3Led(void);
+void APP_LCD_shifting_2BTN(void);
+void APP_UART_LCD (void);
+void APP_UART_virtual(void);
+void APP_TMR0_polling_CTC_cmpmatch_toggle_LED1 (void);
+void APP_SPI_TX(void);
+void APP_SPI_RX(void);
+void APP_ADC_LCD(void);
+
+
+#endif /* APP_APP_UNITTESTING_H_ */

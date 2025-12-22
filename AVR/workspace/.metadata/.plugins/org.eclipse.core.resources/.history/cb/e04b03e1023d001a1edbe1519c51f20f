@@ -1,0 +1,29 @@
+/*
+ * APP_Calc.h
+ *
+ *  Created on: 22 Jan 2020
+ *      Author: Mohamed
+ */
+
+#ifndef APP_APP_CALC_H_
+#define APP_APP_CALC_H_
+
+#include "../UTILITIES/STD_TYPES.h"
+#include "../UTILITIES/BIT_MATH.h"
+
+#include "../MCAL/INC/DIO_driver.h"
+#include "../MCAL/INC/UART_driver.h"
+#include "../MCAL/INC/INT_interface.h"
+#include "../MCAL/INC/TMR.h"
+
+#include "../HAL/INC/LED.h"
+#include "../HAL/INC/BTN.h"
+#include "../HAL/INC/LCD_driver.h"
+#include "../HAL/INC/SVNSEG.h"
+#include "../HAL/INC/KPD.h"
+
+#include <util/delay.h>
+
+void APP_STR_CPY(u8* arr , u8* copy_value ,u16 size);
+
+#endif /* APP_APP_CALC_H_ */

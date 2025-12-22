@@ -1,0 +1,14 @@
+/*
+ * INT_program.c
+ *
+ *  Created on: 11 Jan 2020
+ *      Author: Mohamed
+ */
+
+
+#include "INT_interface.h"
+
+void INT_Void_ExternalIntInit(void)
+{
+
+}

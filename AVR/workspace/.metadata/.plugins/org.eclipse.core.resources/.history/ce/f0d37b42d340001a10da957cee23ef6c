@@ -1,0 +1,31 @@
+/*
+ * SPI.h
+ *
+ *  Created on: 27 Jan 2020
+ *      Author: Mohamed
+ */
+
+#ifndef MCAL_INC_SPI_H_
+#define MCAL_INC_SPI_H_
+
+#include "STD_TYPES.h"
+#include "BIT_MATH.h"
+
+#define 		SPCR	 		*((volatile u8 * ) (0x0D))
+	#define 	RXCIE 			7
+	#define 	RXCIE 			7
+	#define 	RXCIE 			7
+	#define 	RXCIE 			7
+	#define 	RXCIE 			7
+	#define 	RXCIE 			7
+	#define 	RXCIE 			7
+	#define 	RXCIE 			7
+
+#define 		SPSR 			*((volatile u8 * ) (0x0E))
+	#define 	RXCIE 			7
+	#define 	RXCIE 			7
+
+#define 		SPDR 			*((volatile u8 * ) (0x0F))
+
+
+#endif /* MCAL_INC_SPI_H_ */

@@ -1,0 +1,22 @@
+/*
+ * main.c
+ *
+ *  Created on: 31 Dec 2019
+ *      Author: Mohamed
+ */
+
+#include "DIO_interface.h"
+
+int main(void)
+{
+	//DDRA = 0b00000001;
+	DIO_EnumSetPinDirection(DIO_DDRA,DIO_PIN_0,DIO_PIN_OUTPUT);
+	while(1)
+	{
+		DIO_EnumSetPinValue(DIO_DDRA,DIO_PIN_0,DIO_PIN_LOW);
+	}
+
+
+
+	return 0 ;
+}

@@ -1,0 +1,54 @@
+/*
+ * ADC.h
+ *
+ *  Created on: 28 Jan 2020
+ *      Author: Mohamed
+ */
+
+#ifndef MCAL_INC_ADC_H_
+#define MCAL_INC_ADC_H_
+
+#include "STD_TYPES.h"
+#include "BIT_MATH.h"
+
+
+#define 		ADMUX	 			*((volatile u8 * ) (0x27))
+	#define 	REFS1 			7
+	#define 	REFS0 			6
+	#define 	ADLAR 			5
+	#define 	MUX4 			4
+	#define 	MUX3 			3
+	#define 	MUX2 			2
+	#define 	MUX1 			1
+	#define 	MUX0 			0
+
+#define 		ADCSRA	 			*((volatile u8 * ) (0x26))
+	#define 	ADEN 			7
+	#define 	ADSC 			6
+	#define 	ADATE 			5
+	#define 	ADIF 			4
+	#define 	ADIE 			3
+	#define 	ADPS2 			2
+	#define 	ADPS1 			1
+	#define 	ADPS0 			0
+
+#define 		ADCL	 			*((volatile u8 * ) (0x24))
+#define 		ADCH	 			*((volatile u8 * ) (0x25))
+#define 		SFIOR	 			*((volatile u8 * ) (0x30))
+	#define 	ADTS2 			7
+	#define 	ADTS1 			6
+	#define 	ADTS0 			5
+
+
+typedef enum {ADC_EN,ADC_DISABLE} ADC_Enable_t ;
+typedef enum {ADC_REF_DISABLE,ADC_AVCC,ADC_INTERNAL_2_56_V} ADC_Volt_Ref_t ;
+typedef enum {ADC_LEFT_ADJ,ADC_RIGHT_ADJ} ADC_Data_Adjustment_t ;
+typedef enum {ADC_CH_0,ADC_CH_1,ADC_CH_2,ADC_CH_3,ADC_CH_4,ADC_CH_5,ADC_CH_6,ADC_CH_7} ADC_Channel_t ;
+typedef enum {ADC_PRE_2,ADC_PRE_4,ADC_PRE_8,ADC_PRE_16,ADC_PRE_32,ADC_PRE_64,ADC_PRE_128} ADC_Prescaller_t ;
+typedef struct
+{
+	ADC_Enable_t	ADC_Enable;
+
+}ADC_config_t;
+
+#endif /* MCAL_INC_ADC_H_ */

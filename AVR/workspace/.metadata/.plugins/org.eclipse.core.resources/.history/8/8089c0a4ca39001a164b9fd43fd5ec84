@@ -1,0 +1,18 @@
+/*
+ * TMR0.c
+ *
+ *  Created on: 18 Jan 2020
+ *      Author: Mohamed
+ */
+
+#include <TMR.h>
+
+#define	TMR_Number_of_groups 3
+
+
+TMR_config_t TMR_groups [2]=
+{
+	{	TIMER_0 , NORMAL_MODE , PRESCALER_8	},
+	{	TIMER_0 , NORMAL_MODE , PRESCALER_8	}
+};
+

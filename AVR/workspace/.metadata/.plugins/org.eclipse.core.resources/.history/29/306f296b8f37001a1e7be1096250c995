@@ -1,0 +1,20 @@
+/*
+ * LCD_config.c
+ *
+ *  Created on: 15 Jan 2020
+ *      Author: Mohamed
+ */
+
+#include "DIO_driver.h"
+#include "../INC/LCD_driver.h"
+
+LCD_config_t LCD_config_groups[] =
+{
+    { GRP_9_LCD_EN ,GRP_10_LCD_RS ,GRP_11_LCD_RW ,GRP_12_LCD_DATA ,MODE_4}
+
+};
+
+	8
+#define 	9
+#define 	10
+#define 	11

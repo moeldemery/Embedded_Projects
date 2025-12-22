@@ -1,0 +1,122 @@
+
+
+
+#include "DIO_interface.h.txt"
+
+
+
+Error_status DIO_Enum_SetPinDirection(u8 Copy_u8PortNumber, u8 Copy_u8PinNumber , u8 Copy_u8PinDirection)
+{
+	Error_status state = OK;
+	if(Copy_u8PortNumber >= DIO_PORTA &&  Copy_u8PortNumber <= DIO_PORTD && Copy_u8PinNumber >= DIO_PIN_0 && Copy_u8PinNumber <= DIO_PIN_7 )
+	{
+		if(Copy_u8PinDirection == DIO_PIN_INPUT)
+		{
+			CLR_BIT(DIO_DDR(Copy_u8PortNumber),Copy_u8PinNumber);
+		}
+		else
+		{
+			SET_BIT(DIO_DDR(Copy_u8PortNumber),Copy_u8PinNumber);
+		}
+	}
+	else
+	{
+		state = OUTOFRANGE;
+	}
+	
+	return state;
+}
+
+Error_status DIO_Enum_SetPinValue(u8 Copy_u8PortNumber, u8 Copy_u8PinNumber , u8 Copy_u8PinValue)
+{
+	Error_status state = OK;
+		if(Copy_u8PortNumber >= DIO_PORTA &&  Copy_u8PortNumber <= DIO_PORTD && Copy_u8PinNumber >= DIO_PIN_0 && Copy_u8PinNumber <= DIO_PIN_7 )
+		{
+			if(Copy_u8PinValue == DIO_PIN_LOW)
+			{
+				CLR_BIT(DIO_PORT(Copy_u8PortNumber),Copy_u8PinNumber);
+			}
+			else
+			{
+				SET_BIT(DIO_PORT(Copy_u8PortNumber),Copy_u8PinNumber);
+			}
+		}
+		else
+		{
+			state = OUTOFRANGE;
+		}
+
+		return state;
+}
+
+Error_status DIO_Enum_GetPinValue(u8 Copy_u8PortNumber, u8 Copy_u8PinNumber , u8 * Copy_pu8PinValue)
+{
+	Error_status state = OK;
+	if(Copy_pu8PinValue != NULL )
+	{
+		if(Copy_u8PortNumber >= DIO_PORTA &&  Copy_u8PortNumber <= DIO_PORTD )
+		{
+			*Copy_pu8PinValue = GET_BIT(DIO_PIN(Copy_u8PortNumber),Copy_u8PinNumber) ;
+		}
+		else
+		{
+			state = OUTOFRANGE;
+		}
+	}
+	else
+	{
+		state = NULLPOINTER;
+	}
+	return state;
+}
+
+/***********************************************************************/
+
+Error_status DIO_Enum_SetPortDirection(u8 Copy_u8PortNumber, u8 CopyPortDirection)
+{
+	Error_status state = OK;
+	if(Copy_u8PortNumber >= DIO_PORTA &&  Copy_u8PortNumber <= DIO_PORTD )
+	{
+		DIO_DDR(Copy_u8PortNumber) = CopyPortDirection;
+	}
+	else
+	{
+		state = OUTOFRANGE;
+	}
+	return state;
+}
+
+Error_status DIO_Enum_SetPortValue(u8 Copy_u8PortNumber, u8 CopyPortValue)
+{
+	Error_status state = OK;
+	if(Copy_u8PortNumber >= DIO_PORTA &&  Copy_u8PortNumber <= DIO_PORTD )
+	{
+		DIO_PORT(Copy_u8PortNumber) = CopyPortValue;
+	}
+	else
+	{
+		state = OUTOFRANGE;
+	}
+	return state;
+}
+
+Error_status DIO_Enum_GetPortValue(u8 Copy_u8PortNumber, u8 * Copy_pu8PortValue)
+{
+	Error_status state = OK;
+	if(Copy_pu8PortValue != NULL )
+	{
+		if(Copy_u8PortNumber >= DIO_PORTA &&  Copy_u8PortNumber <= DIO_PORTD )
+		{
+			*Copy_pu8PortValue = DIO_PORT(Copy_u8PortNumber) ;
+		}
+		else
+		{
+			state = OUTOFRANGE;
+		}
+	}
+	else
+	{
+		state = NULLPOINTER;
+	}
+	return state;
+}

@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1577266501 source:d:\iti\compiler\mini_compiler\file_manger.c
+	"file_manger.h"
+
+1577267738 d:\iti\compiler\mini_compiler\file_manger.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+
+1578729542 source:d:\iti\compiler\mini_compiler\main.c
+	"file_manger.h"
+

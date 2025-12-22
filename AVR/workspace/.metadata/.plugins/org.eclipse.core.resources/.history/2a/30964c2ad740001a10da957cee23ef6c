@@ -1,0 +1,34 @@
+/*
+ * SPI.c
+ *
+ *  Created on: 27 Jan 2020
+ *      Author: Mohamed
+ */
+
+#include "SPI.h"
+
+SPI_config_t SPI_group = {	SPI_EN , SPI_SLAVE	,SPI_MSB_FIRST,SPI_LEADING_EDGE_RISING,SPI_LEADING_EDGE_SAMPLING,SPI_F_4,SPI_INT_DISABLE};
+
+void SPI_Init(void)
+{
+	u8	SPCR_temp=0;
+
+	switch (UART_group[0].enable)
+	{
+		case SPI_EN:
+		{
+			SET_BIT(SPCR_temp,SPE);
+			break;
+		}
+		case SPI_DISABLE:
+		{
+			CLR_BIT(SPCR_temp,SPE);
+			break;
+		}
+		default:
+		{
+			//#warning "unexpected input in UART Enable type"
+			break;
+		}
+	}
+}

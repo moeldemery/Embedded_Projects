@@ -1,0 +1,21 @@
+/*
+ * DIO_config.c
+ *
+ *  Created on: 15 Jan 2020
+ *      Author: Mohamed
+ */
+
+#include "DIO_driver.h"
+
+
+DIO_config_t DIO_groups [DIO_Number_of_groups]=
+{
+	{PORTD, 0b10000000, OUTPUT 	,PULL_UP_DISABLE	},		/*led1 		1 group*/
+	{PORTD, 0b01100000, OUTPUT	,PULL_UP_DISABLE	},		/*led2 		2 group*/
+	{PORTD, 0b00000001, INPUT  	,PULL_UP_ENABLE		},		/*BTN0 		3 group*/
+	{PORTC, 0b11110000, OUTPUT  ,PULL_UP_DISABLE	},		/*SEG1 		4 group*/
+	{PORTC, 0b00000100, OUTPUT  ,PULL_UP_DISABLE	},		/*SEG1_EN 	5 group*/
+	{PORTC, 0b00001000, OUTPUT  ,PULL_UP_DISABLE	},		/*SEG2_EN 	6 group*/
+	{PORTD, 0b00000010, INPUT  	,PULL_UP_ENABLE		},		/*BTN1 		3 group*/
+	{PORTD, 0b00000100, INPUT  	,PULL_UP_ENABLE		}		/*BTN2 		3 group*/
+};

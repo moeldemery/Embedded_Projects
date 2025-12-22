@@ -1,0 +1,64 @@
+/*
+ * DIO_driver.h
+ *
+ *  Created on: 14 Jan 2020
+ *      Author: Mohamed
+ */
+
+#ifndef MCAL_INC_DIO_DRIVER_H_
+#define MCAL_INC_DIO_DRIVER_H_
+
+#include "STD_TYPES.h"
+
+#define	DIO_Number_of_groups 15
+#define NUMBER_OF_PORTS 	4
+
+
+
+#define PORT(x) 				*((volatile u8 * ) (0x3B)-(3*x))
+#define DDR(x)	 				*((volatile u8 * ) (0x3A)-(3*x))
+#define PIN(x) 					*((volatile u8 * ) (0x39)-(3*x))
+
+
+typedef enum {PORTA,PORTB,PORTC,PORTD} Port_t ;
+typedef enum {INPUT = 0x00,	OUTPUT = 0xFF} Direction_t ;
+typedef enum {DO_NOT_CARE = 0,	PULL_UP_EN = 1} PullUpEnable_t ;
+
+typedef struct
+{
+	Port_t 				port_id;
+	u8					mask;
+	Direction_t 		direction;
+	PullUpEnable_t		pull_up_reg;
+
+}DIO_config_t;
+
+
+
+
+#define GRP_1_LED		0
+#define GRP_2_LED		1
+#define GRP_3_BTN0		2
+#define GRP_4_SEG1		3
+#define GRP_5_SEG1_EN	4
+#define GRP_6_SEG2_EN	5
+#define GRP_7_BTN1		6
+#define GRP_8_BTN2		7
+#define GRP_9_LCD_EN	8
+#define GRP_10_LCD_Rw	9
+#define GRP_11_LCD_Rs	10
+#define GRP_12_LCD_DATA	11
+#define GRP_13_EXT_INT	12
+#define GRP_14_ROW		13
+#define GRP_15_COL		14
+
+
+#define SEVEN_SEG_PIN 	4
+
+
+void DIO_Init	(void);
+void DIO_Write 	(u8 data, u8 Group_id);
+u8   DIO_Read	(u8 Group_id);
+void DIO_Toggle 	(u8 data, u8 Group_id);
+
+#endif /* 1_MCAL_INC_DIO_DRIVER_H_ */

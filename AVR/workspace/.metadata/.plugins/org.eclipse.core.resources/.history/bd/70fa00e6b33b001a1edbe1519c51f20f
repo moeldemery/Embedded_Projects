@@ -1,0 +1,75 @@
+/*
+ * KPD.c
+ *
+ *  Created on: 16 Jan 2020
+ *      Author: Mohamed
+ */
+
+
+#include "../INC/KPD.h"
+
+u8 KPD_Get_State(void)
+{
+
+    u8 Col_value,State_busy;
+
+    DIO_Write(HIGH,GRP_13_ROW);
+    Col_value = DIO_Read(GRP_14_COL);
+
+        if (Col_value== (0B0000<<KPD_COL_PIN))
+        {
+            State_busy = 0x00;
+        }
+        else
+        {
+            State_busy = 0xFF;
+        }
+
+
+    return State_busy;
+}
+
+u8 KPD_Debounce_Filter(void)
+{
+
+    unsigned char Col_check1,Col_check2,Col_value;
+
+    Col_check1=KPD_Get_State();
+    if(Col_check1 == HIGH)
+    {
+        _delay_ms(200);
+        Col_check2=KPD_Get_State();
+        if(Col_check2 == HIGH)
+        {
+            Col_value = DIO_Read(GRP_14_COL);
+            return Col_value;
+        }
+    }
+    else
+    {
+    	 Col_value=0xff;
+    }
+    return Col_value;
+}
+
+u8 KPD_Scan (void)
+{
+	unsigned char Col_val;
+
+	DIO_Write((0B1000<<KPD_ROW_PIN),GRP_13_ROW);
+	Col_val=DIO_Read(GRP_14_COL);
+	switch(Col_val)
+	{
+		case (0B1000<<KPD_COL_PIN):
+			return '1';
+		case (0B0100<<KPD_COL_PIN):
+			return '4';
+		case (0B0010<<KPD_COL_PIN):
+			return '7';
+		case (0B0001<<KPD_COL_PIN):
+			return '*';
+	}
+	_delay_ms(100);
+	DIO_Write((0B0000<<KPD_ROW_PIN),GRP_13_ROW);
+	_delay_ms(100);
+}

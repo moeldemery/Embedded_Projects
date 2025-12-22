@@ -1,0 +1,24 @@
+/*
+ * SVNSEG.h
+ *
+ *  Created on: 16 Jan 2020
+ *      Author: Mohamed
+ */
+
+#ifndef HAL_INC_SVNSEG_H_
+#define HAL_INC_SVNSEG_H_
+
+#include "../UTILITIES/STD_TYPES.h"
+#include "../UTILITIES/BIT_MATH.h"
+
+#include "../../MCAL/INC/DIO_driver.h"
+#include "../../MCAL/INC/UART_driver.h"
+#include "../../MCAL/INC/INT_interface.h"
+
+void SVNSEG_Display(u8 number);
+void SVNSEG1_EN(void);
+void SVNSEG1_DEN(void);
+void SVNSEG2_EN(void);
+void SVNSEG2_DEN(void);
+
+#endif /* HAL_INC_SVNSEG_H_ */

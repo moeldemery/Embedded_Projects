@@ -1,0 +1,55 @@
+/*
+ * DIO_driver.h
+ *
+ *  Created on: 14 Jan 2020
+ *      Author: Mohamed
+ */
+
+#ifndef MCAL_INC_DIO_DRIVER_H_
+#define MCAL_INC_DIO_DRIVER_H_
+
+#include "STD_TYPES.h"
+
+#define	DIO_Number_of_groups 4
+#define NUMBER_OF_PORTS 	4
+
+
+
+#define PORT(x) 				*((volatile u8 * ) (0x3B)-(3*x))
+#define DDR(x)	 				*((volatile u8 * ) (0x3A)-(3*x))
+#define PIN(x) 					*((volatile u8 * ) (0x39)-(3*x))
+
+
+typedef enum {PORTA,PORTB,PORTC,PORTD} Port_t ;
+typedef enum {INPUT = 0x00,	OUTPUT = 0xFF} Direction_t ;
+typedef enum {PULL_UP_DISABLE = 0,	PULL_UP_ENABLE = 1} PullUpEnable_t ;
+
+typedef struct
+{
+	Port_t 				port_id;
+	u8					mask;
+	Direction_t 		direction;
+	PullUpEnable_t		pull_up_reg;
+
+}DIO_config_t;
+
+
+#define GRP_PORT(X) 	DIO_groups[X].port_id
+#define GRP_MASK(X) 	DIO_groups[X].mask
+#define GRP_DIR(X)	 	DIO_groups[X].direction
+#define GRP_PULL(X) 	DIO_groups[X].pull_up_reg
+
+#define GRP_1_LED		0
+#define GRP_2_LED		1
+#define GRP_3_BTN		2
+#define GRP_4_SEG1		3
+#define GRP_5_SEG1_EN	4
+
+#define HIGH 0xFF
+#define LOW	 0x00
+
+void DIO_Init	(void);
+void DIO_Write 	(u8 data, u8 Group_id);
+u8   DIO_Read	(u8 Group_id);
+
+#endif /* 1_MCAL_INC_DIO_DRIVER_H_ */

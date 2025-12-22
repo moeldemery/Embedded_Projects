@@ -1,0 +1,307 @@
+/*
+	Name: 			DIO.h
+	Copyright: 		v1
+	Author: 		mohamed eldemery
+	Date: 			07/02/20 06:22
+	Description: 	
+ */
+#include "STD_TYPES.h"
+#include "BIT_MATH.h"
+#include "DIO.h"
+
+Error_status DIO_enum_Init(void)
+{
+	/*config all pins output pp(pushpull) 2mhz */
+	Error_status local_eum_returnState = OK;
+
+	return local_eum_returnState;
+
+}
+
+
+
+
+/*****************************************************/
+/***********                               ***********/
+/***********                               ***********/
+/***********                               ***********/
+/*****************************************************/
+
+Error_status DIO_enum_SetPinDirection(u8 Copy_u8_PinNo, u8 Copy_u8_PinMode)
+{
+	Error_status local_eum_returnState = OK;
+	if (Copy_u8_PinNo <= DIO_PIN_34)
+	{
+		u8 Local_u8_PortNo = Copy_u8_PinNo/16;
+		u8 Local_u8_PinNo  = Copy_u8_PinNo%16;
+		switch(Local_u8_PortNo)
+		{
+		case 0:
+		{
+			if (Copy_u8_PinMode == DIO_IN_PULL_DOWN)
+			{
+				CLR_BIT(GPIOA->ODR,Local_u8_PinNo);
+			}
+			else if(Copy_u8_PinMode == DIO_IN_PULL_UP)
+			{
+				SET_BIT(GPIOA->ODR,Local_u8_PinNo);
+			}
+			if (Local_u8_PinNo <=7)
+			{
+				ASSIGN_NIBBLE_VALUE(GPIOA->CRL,Local_u8_PinNo,Copy_u8_PinMode);
+			}
+			else if (Local_u8_PinNo <=15)
+			{
+				Local_u8_PinNo -=8;
+				ASSIGN_NIBBLE_VALUE(GPIOA->CRH,Local_u8_PinNo,Copy_u8_PinMode);
+			}
+
+			break;
+		}
+		case 1:
+		{
+			if (Copy_u8_PinMode == DIO_IN_PULL_DOWN)
+			{
+				CLR_BIT(GPIOB->ODR,Local_u8_PinNo);
+			}
+			else if(Copy_u8_PinMode == DIO_IN_PULL_UP)
+			{
+				SET_BIT(GPIOB->ODR,Local_u8_PinNo);
+			}
+			if (Local_u8_PinNo <=7)
+			{
+				ASSIGN_NIBBLE_VALUE(GPIOB->CRL,Local_u8_PinNo,Copy_u8_PinMode);
+			}
+			else if (Local_u8_PinNo <=15)
+			{
+				Local_u8_PinNo -=8;
+				ASSIGN_NIBBLE_VALUE(GPIOB->CRH,Local_u8_PinNo,Copy_u8_PinMode);
+			}
+
+			break;
+		}
+		case 2:
+		{
+			if (Copy_u8_PinMode == DIO_IN_PULL_DOWN)
+			{
+				CLR_BIT(GPIOC->ODR,Local_u8_PinNo);
+			}
+			else if(Copy_u8_PinMode == DIO_IN_PULL_UP)
+			{
+				SET_BIT(GPIOC->ODR,Local_u8_PinNo);
+			}
+			if(Local_u8_PinNo>=13 && Local_u8_PinNo<=15)
+			{
+				Local_u8_PinNo-=8;
+				ASSIGN_NIBBLE_VALUE(GPIOC->CRH,Local_u8_PinNo,Copy_u8_PinMode);
+			}
+
+			break;
+		}
+		}
+	}
+	else
+	{
+		/*outside range */
+		local_eum_returnState = OUTOFRANGE;
+	}
+
+	return local_eum_returnState;
+
+}
+ /**********************************************************/
+ /***************                         ******************/
+ /***************                         ******************/
+ /***************                         ******************/
+ /**********************************************************/
+Error_status DIO_EnuSetPinValue(u8 copy_u8PinNum,u8 copy_u8Value)
+{
+	Error_status Local_enuReturnState = OK;
+	if(copy_u8PinNum <= DIO_PIN_34 && (copy_u8Value==DIO_HIGH || copy_u8Value==DIO_LOW))
+	{
+		u8 Local_u8PortNum=copy_u8PinNum/16;
+		u8 Local_u8PinNum =copy_u8PinNum%16;
+		switch(Local_u8PortNum)
+		{
+			case 0:
+				if(copy_u8Value==DIO_HIGH)
+				{
+					SET_BIT(GPIOA->ODR,Local_u8PinNum);
+				}
+				else
+				{
+					CLR_BIT(GPIOA->ODR,Local_u8PinNum);
+				}
+			break;
+			case 1:
+				if(copy_u8Value==DIO_HIGH)
+				{
+					SET_BIT(GPIOB->ODR,Local_u8PinNum);
+				}
+				else
+				{
+					CLR_BIT(GPIOB->ODR,Local_u8PinNum);
+				}
+			break;
+			case 2:
+				if(Local_u8PinNum>=13 && Local_u8PinNum<=15)
+				{
+					if(copy_u8Value==DIO_HIGH)
+					{
+						SET_BIT(GPIOC->ODR,Local_u8PinNum);
+					}
+					else
+					{
+						CLR_BIT(GPIOC->ODR,Local_u8PinNum);
+					}
+				}
+				else
+				{
+					Local_enuReturnState=OUTOFRANGE;
+				}
+			break;
+			default:/*do nothing*/break;
+		}
+	}
+	else
+	{
+		Local_enuReturnState=OUTOFRANGE;
+	}
+	return Local_enuReturnState;
+}
+
+/********************************************************************************/
+/*********************                             ******************************/
+/*********************                             ******************************/
+/*********************                             ******************************/
+/********************************************************************************/
+Error_status DIO_Enu_GetPinValue(u8 copy_u8PinNum,u8* copy_Pu8ReturnValue)
+{
+	Error_status Local_enuReturnState = OK;
+	if(copy_Pu8ReturnValue == NULL)
+	{
+		Local_enuReturnState=NULLPOINTER;
+	}
+	else if(copy_u8PinNum <= DIO_PIN_34)
+	{
+		u8 Local_u8PortNum=copy_u8PinNum/16;
+		u8 Local_u8PinNum =copy_u8PinNum%16;
+		switch(Local_u8PortNum)
+		{
+			case 0:
+				*copy_Pu8ReturnValue=GET_BIT(GPIOA->IDR,copy_u8PinNum);
+			break;
+			case 1:
+				*copy_Pu8ReturnValue=GET_BIT(GPIOB->IDR,copy_u8PinNum);
+			break;
+			case 3:
+				if(Local_u8PinNum>=13 && Local_u8PinNum<=15)
+				{
+					*copy_Pu8ReturnValue=GET_BIT(GPIOC->IDR,copy_u8PinNum);
+				}
+				else
+				{
+					Local_enuReturnState=OUTOFRANGE;
+				}
+			break;
+			default:/*do nothing*/ break;
+		}
+	}
+	else
+	{
+		Local_enuReturnState=OUTOFRANGE;
+	}
+	return Local_enuReturnState;
+}
+//
+//Error_status DIO_enum_SetPinValue(u8 Copy_u8_PinNo, u8 Copy_u8_PinValue)
+//{
+//	Error_status local_eum_returnState = OK;
+//	if (Copy_u8_PinNo <= DIO_PIN_34)
+//	{
+//		u8 Local_u8_PortNo = Copy_u8_PinNo/16;
+//		u8 Local_u8_PinNo  = Copy_u8_PinNo%16;
+//		switch(Local_u8_PortNo)
+//		{
+//		case 0:	/*case port a selected*/
+//		{
+//			if (Copy_u8_PinValue == DIO_HIGH) /*check data high or low*/
+//			{
+//				SET_BIT(DIO_PORT_A->ODR ,Local_u8_PinNo);
+//			} else {
+//				CLR_BIT(DIO_PORT_A->ODR ,Local_u8_PinNo);
+//			}
+//
+//			break;
+//		}
+//		case 1:/*case port b selected*/
+//		{
+//			if (Copy_u8_PinValue == DIO_HIGH) /*check data high or low*/
+//			{
+//				SET_BIT(DIO_PORT_B->ODR ,Local_u8_PinNo);
+//			} else {
+//				CLR_BIT(DIO_PORT_B->ODR ,Local_u8_PinNo);
+//			}
+//
+//			break;
+//		}
+//		case 2:/*case port c selected*/
+//		{
+//			if (Copy_u8_PinValue == DIO_HIGH) /*check data high or low*/
+//			{
+//				SET_BIT(DIO_PORT_C->ODR ,Local_u8_PinNo);
+//			} else {
+//				CLR_BIT(DIO_PORT_C->ODR ,Local_u8_PinNo);
+//			}
+//
+//			break;
+//		}
+//		}
+//	}
+//	else
+//	{
+//		/*outside range */
+//		local_eum_returnState = OUTOFRANGE;
+//	}
+//	return local_eum_returnState;
+//}
+//
+//
+//Error_status DIO_u8_GetPinValue(u8 Copy_u8_PinNo ,u8* Copy_u8_ReturnValue)
+//{
+//	Error_status local_eum_returnState = OK;
+//	if (Copy_u8_ReturnValue == NULL)
+//	{
+//		local_eum_returnState=NULLPOINTER;
+//	}
+//	else if(Copy_u8_PinNo <= DIO_PIN_34)
+//	{
+//		u8 Local_u8_PortNo = Copy_u8_PinNo/16;
+//		u8 Local_u8_PinNo  = Copy_u8_PinNo%16;
+//		switch(Local_u8_PortNo)
+//		{
+//		case 0:	/*case port a selected*/
+//		{
+//			Copy_u8_ReturnValue = GET_BIT(DIO_PORT_A->IDR,Local_u8_PinNo);
+//			break;
+//		}
+//		case 1:/*case port b selected*/
+//		{
+//			Copy_u8_ReturnValue = GET_BIT(DIO_PORT_B->IDR,Local_u8_PinNo);
+//			break;
+//		}
+//		case 2:/*case port c selected*/
+//		{
+//			Copy_u8_ReturnValue = GET_BIT(DIO_PORT_C->IDR,Local_u8_PinNo);
+//			break;
+//		}
+//		}
+//
+//	}
+//	else
+//	{
+//		local_eum_returnState = OUTOFRANGE;
+//	}
+//	return local_eum_returnState;
+//}
+//

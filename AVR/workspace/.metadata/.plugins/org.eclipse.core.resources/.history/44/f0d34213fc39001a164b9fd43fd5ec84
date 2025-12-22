@@ -1,0 +1,84 @@
+/*
+ * main.c
+ *
+ *  Created on: 31 Dec 2019
+ *      Author: Mohamed
+ */
+
+
+
+#include "UTILITIES/STD_TYPES.h"
+#include "UTILITIES/BIT_MATH.h"
+
+#include "MCAL/INC/DIO_driver.h"
+#include "MCAL/INC/UART_driver.h"
+#include "MCAL/INC/INT_interface.h"
+#include "MCAL/INC/TMR.h"
+
+#include "HAL/INC/LED.h"
+#include "HAL/INC/BTN.h"
+#include "HAL/INC/LCD_driver.h"
+
+#include "APP/APP_UnitTesting.h"
+
+#include <util/delay.h>
+
+
+
+
+
+int count =0;
+
+int main(void)
+{
+	DIO_Init();
+	//LCD_void_Init();
+	//INT_Void_ExternalIntInit(EXT_INT_0);
+
+
+
+	//APP_BTN_Toggle_LED();
+	//APP_Counter_2SvnSeg_2Btn_3Led();
+
+	//APP_LCD_shifting_2BTN();
+	TMR_Init();
+
+	//TCCR0 |= (unsigned char)0B101;
+
+	while(1)
+	{
+
+		while(!GET_BIT(TIFR , TOV0));
+		count++;
+		if( count >= 45 )
+		{
+			LED1_Toggle();
+
+			//_delay_ms(100);
+			count =0;
+		}
+		SET_BIT(TIFR , TOV0);
+			//_delay_ms(1000);
+
+	}
+
+	return 0 ;
+}
+
+
+
+
+
+
+/*
+ISR(1)
+{
+
+	LED1_On();
+	_delay_ms(1000);
+	LED1_Off();
+}
+*/
+
+
+

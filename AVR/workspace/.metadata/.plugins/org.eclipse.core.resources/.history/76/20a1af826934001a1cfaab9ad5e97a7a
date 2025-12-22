@@ -1,0 +1,37 @@
+/*
+ * INT_program.c
+ *
+ *  Created on: 11 Jan 2020
+ *      Author: Mohamed
+ */
+
+
+#include "INT_interface.h"
+
+void INT_Void_ExternalIntInit(u8 Copy_u8_ChannelNo)
+{
+	switch (Copy_u8_ChannelNo)
+	{
+		case EXT_INT_0:
+		{
+
+			SET_BIT(MCUCR_REG,EXT_INT0_SENCE_FAILING);
+			SET_BIT(GICR_REG,EXT_INT_0);
+			SET_BIT(SREG_REG,7);
+
+			DIO_EnumSetPinDirection(DIO_PORT(4),DIO_PIN_2,DIO_PIN_INPUT);
+			DIO_EnumSetPinValue(DIO_PORT(4),DIO_PIN_2,DIO_PIN_HIGH);
+			break;
+		}
+
+		default:
+		{
+
+			break;
+		}
+
+	}
+}
+
+
+

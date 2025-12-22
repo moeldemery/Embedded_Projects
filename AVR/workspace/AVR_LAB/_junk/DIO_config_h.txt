@@ -1,0 +1,13 @@
+/*
+ * DIO_config.h
+ *
+ *  Created on: 31 Dec 2019
+ *      Author: Mohamed
+ */
+
+#ifndef MCAL_INC_DIO_CONFIG_H_
+#define MCAL_INC_DIO_CONFIG_H_
+
+
+
+#endif /* MCAL_INC_DIO_CONFIG_H_ */

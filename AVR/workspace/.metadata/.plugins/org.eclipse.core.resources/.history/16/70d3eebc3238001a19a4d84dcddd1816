@@ -1,0 +1,41 @@
+/*
+ * LCD_driver.h
+ *
+ *  Created on: 15 Jan 2020
+ *      Author: Mohamed
+ */
+
+#ifndef HAL_INC_LCD_DRIVER_H_
+#define HAL_INC_LCD_DRIVER_H_
+
+#include "BIT_MATH.h"
+#include "STD_TYPES.h"
+#include "DIO_driver.h"
+#include <util/delay.h>
+
+typedef enum {MODE_4_BITS , MODE_8_BITS } LCD_mode_4_or_8_t ;
+typedef struct
+{
+	u8	 					LCD_En_Group_Number;
+	u8						LCD_Rw_Group_Number;
+	u8			 			LCD_Rs_Group_Number;
+	u8			 			LCD_DATA_Group_Number;
+	LCD_mode_4_or_8_t		LCD_MODE_4_OR_8;
+
+}LCD_config_t;
+
+void LCD_void_Init(void);
+
+//void LCD_void_SendCMD(u8 order);
+//void LCD_void_SendData(u8 data_byte);
+void LCD_void_SendString (u8 *s);
+
+void LCD_GoTO(u8 x,u8 y);
+
+void LCD_Clear(void);
+void LCD_On(void);
+void LCD_Off(void);
+void LCD_Shift_Right(void);
+void LCD_Special_Char(void);
+
+#endif /* HAL_INC_LCD_DRIVER_H_ */

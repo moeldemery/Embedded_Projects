@@ -1,0 +1,13 @@
+/*
+ * DIO_private.h
+ *
+ *  Created on: 31 Dec 2019
+ *      Author: Mohamed
+ */
+
+#ifndef MCAL_INC_DIO_PRIVATE_H_
+#define MCAL_INC_DIO_PRIVATE_H_
+
+
+
+#endif /* MCAL_INC_DIO_PRIVATE_H_ */

@@ -1,0 +1,16 @@
+/*
+ * main.c
+ *
+ *  Created on: 31 Dec 2019
+ *      Author: Mohamed
+ */
+
+#include <avr/io.h>
+
+int main(void)
+{
+	DDRA = 0b00000001;
+
+	PORTA = 0x01;
+	return 0 ;
+}

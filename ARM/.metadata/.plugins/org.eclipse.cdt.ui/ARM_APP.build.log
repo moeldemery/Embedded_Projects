@@ -1,0 +1,82 @@
+15:33:41 **** Incremental Build of configuration Debug for project ARM_APP ****
+make all 
+Building file: ../src/DIO_program.c
+Invoking: Cross ARM GNU C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m3 -mthumb -Og -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -ffreestanding -fno-move-loop-invariants -Wall -Wextra  -g3 -DDEBUG -DUSE_FULL_ASSERT -DTRACE -DOS_USE_TRACE_SEMIHOSTING_DEBUG -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -DHSE_VALUE=8000000 -I"../include" -I"../system/include" -I"../system/include/cmsis" -I"../system/include/stm32f1-stdperiph" -std=gnu11 -MMD -MP -MF"src/DIO_program.d" -MT"src/DIO_program.o" -c -o "src/DIO_program.o" "../src/DIO_program.c"
+In file included from ../src/DIO_program.c:10:0:
+../include/DIO_interface.h:109:1: error: unknown type name 'ErrorStatus'; did you mean 'Error_state'?
+ ErrorStatus DIO_EnuSetPinValue(u8 Copy_u8PinIdx, u8 Copy_u8PinVal);
+ ^~~~~~~~~~~
+ Error_state
+../include/DIO_interface.h:119:1: error: unknown type name 'ErrorStatus'; did you mean 'Error_state'?
+ ErrorStatus DIO_EnuGetPinValue(u8 Copy_u8PinIdx, u8 *Copy_Pu8PinVal);
+ ^~~~~~~~~~~
+ Error_state
+../src/DIO_program.c: In function 'DIO_voidInitialize':
+../src/DIO_program.c:17:2: error: 'DIO_CRL_A' undeclared (first use in this function); did you mean 'GPIO_CRL_A'?
+  DIO_CRL_A = 0x22222222;  //>> 01 for pp Mode & 00 for input [0x2 = 0b0010]
+  ^~~~~~~~~
+  GPIO_CRL_A
+../src/DIO_program.c:17:2: note: each undeclared identifier is reported only once for each function it appears in
+../src/DIO_program.c:18:2: error: 'DIO_CRL_B' undeclared (first use in this function); did you mean 'DIO_CRL_A'?
+  DIO_CRL_B = 0x22222222;
+  ^~~~~~~~~
+  DIO_CRL_A
+../src/DIO_program.c:19:2: error: 'DIO_CRH_A' undeclared (first use in this function); did you mean 'DIO_CRL_A'?
+  DIO_CRH_A = 0x22222222;
+  ^~~~~~~~~
+  DIO_CRL_A
+../src/DIO_program.c:20:2: error: 'DIO_CRH_B' undeclared (first use in this function); did you mean 'DIO_CRH_A'?
+  DIO_CRH_B = 0x22222222;
+  ^~~~~~~~~
+  DIO_CRH_A
+../src/DIO_program.c:21:2: error: 'DIO_CRH_C' undeclared (first use in this function); did you mean 'DIO_CRH_B'?
+  DIO_CRH_C = 0x22200000;
+  ^~~~~~~~~
+  DIO_CRH_B
+../src/DIO_program.c: In function 'DIO_SetPinValue':
+../src/DIO_program.c:31:11: warning: implicit declaration of function 'ASSIGN_BIT'; did you mean 'ASSIGN_BET'? [-Wimplicit-function-declaration]
+   case 0: ASSIGN_BIT(DIO_ODA_A , Local_u8PinNum , Copy_u8PinValue); break;
+           ^~~~~~~~~~
+           ASSIGN_BET
+../src/DIO_program.c:31:22: error: 'DIO_ODA_A' undeclared (first use in this function); did you mean 'GPIO_ODR_A'?
+   case 0: ASSIGN_BIT(DIO_ODA_A , Local_u8PinNum , Copy_u8PinValue); break;
+                      ^~~~~~~~~
+                      GPIO_ODR_A
+../src/DIO_program.c:32:22: error: 'DIO_ODA_B' undeclared (first use in this function); did you mean 'DIO_ODA_A'?
+   case 1: ASSIGN_BIT(DIO_ODA_B , Local_u8PinNum , Copy_u8PinValue); break;
+                      ^~~~~~~~~
+                      DIO_ODA_A
+../src/DIO_program.c:33:22: error: 'DIO_ODA_C' undeclared (first use in this function); did you mean 'DIO_ODA_B'?
+   case 2: ASSIGN_BIT(DIO_ODA_C , Local_u8PinNum , Copy_u8PinValue); break;
+                      ^~~~~~~~~
+                      DIO_ODA_B
+../src/DIO_program.c: At top level:
+../src/DIO_program.c:36:4: error: conflicting types for 'DIO_GetPinValue'
+ u8 DIO_GetPinValue (u8 Copy_u8PinNo)
+    ^~~~~~~~~~~~~~~
+In file included from ../src/DIO_program.c:10:0:
+../include/DIO_interface.h:74:6: note: previous declaration of 'DIO_GetPinValue' was here
+ void DIO_GetPinValue (u8 Copy_u8PinNo);
+      ^~~~~~~~~~~~~~~
+../src/DIO_program.c: In function 'DIO_GetPinValue':
+../src/DIO_program.c:44:28: warning: implicit declaration of function 'GET_BIT'; did you mean 'GET_BET'? [-Wimplicit-function-declaration]
+   case 0: Local_u8Result = GET_BIT(DIO_ODA_A , Local_u8PinNum ); break;
+                            ^~~~~~~
+                            GET_BET
+../src/DIO_program.c:44:36: error: 'DIO_ODA_A' undeclared (first use in this function); did you mean 'GPIO_ODR_A'?
+   case 0: Local_u8Result = GET_BIT(DIO_ODA_A , Local_u8PinNum ); break;
+                                    ^~~~~~~~~
+                                    GPIO_ODR_A
+../src/DIO_program.c:45:36: error: 'DIO_ODA_B' undeclared (first use in this function); did you mean 'DIO_ODA_A'?
+   case 1: Local_u8Result = GET_BIT(DIO_ODA_B , Local_u8PinNum ); break;
+                                    ^~~~~~~~~
+                                    DIO_ODA_A
+../src/DIO_program.c:46:36: error: 'DIO_ODA_C' undeclared (first use in this function); did you mean 'DIO_ODA_B'?
+   case 2: Local_u8Result = GET_BIT(DIO_ODA_C , Local_u8PinNum ); break;
+                                    ^~~~~~~~~
+                                    DIO_ODA_B
+make: *** [src/subdir.mk:29: src/DIO_program.o] Error 1
+
+15:33:41 Build Finished (took 881ms)
+

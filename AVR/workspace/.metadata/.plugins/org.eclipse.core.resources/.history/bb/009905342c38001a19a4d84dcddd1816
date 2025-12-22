@@ -1,0 +1,102 @@
+/*
+ * APP_UnitTesting.c
+ *
+ *  Created on: 16 Jan 2020
+ *      Author: Mohamed
+ */
+
+#include "APP_UnitTesting.h"
+
+void APP_Counter_SvnSeg_2Btn_3Led(void)
+{
+	static u8 count =0;
+	while(1)
+		{
+			//button 0 pressed
+			if( BTN0_GetValue())
+			{
+				while(BTN0_GetValue())
+				{
+					APP_COUNTER(count);
+					LED1_Off();
+				}
+				count++;
+				if(count>99)
+				{
+					count=0;
+				}
+
+			}
+			else
+			{
+				LED1_On();
+			}
+
+
+			if( BTN1_GetValue())
+			{
+				while(BTN1_GetValue());
+
+			}
+			else
+			{
+
+			}
+
+			//button 2 pressed
+			if( BTN2_GetValue())
+			{
+				while(BTN2_GetValue())
+				{
+					APP_COUNTER(count);
+					LED2_Off();
+				}
+				if(count==0)
+				{
+					count=99;
+				}
+				else
+				{
+					count--;
+				}
+			}
+			else
+			{
+				LED2_On();
+			}
+
+
+		APP_COUNTER(count);
+		}
+}
+
+void APP_COUNTER(u8 number)
+{
+	u8 units = number%10;
+	u8 tenth = number/10;
+
+	SVNSEG1_EN();
+	SVNSEG_Display(units);
+	_delay_ms(1000);
+	SVNSEG1_DEN();
+
+	SVNSEG2_EN();
+	SVNSEG_Display(tenth);
+	_delay_ms(1000);
+	SVNSEG2_DEN();
+}
+
+void APP_BTN_Toggle_LED(void)
+{
+	while(1)
+	{
+		if(BTN_GetValue())
+		{
+			LED_Off();
+		}
+		else
+		{
+			LED_On();
+		}
+	}
+}

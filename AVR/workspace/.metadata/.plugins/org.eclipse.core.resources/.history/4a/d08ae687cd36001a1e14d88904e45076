@@ -1,0 +1,30 @@
+/*
+ * DIO_interface.h
+ *
+ *  Created on: 31 Dec 2019
+ *      Author: Mohamed
+ */
+
+#ifndef DIO_INTERFACE_H_
+#define DIO_INTERFACE_H_
+
+#include "../0-UTILITIES/BIT_MATH.h"
+#include "../0-UTILITIES/STD_TYPES.h"
+#include "DIO_register.h"
+
+Error_status DIO_Enum_SetPinDirection(u8 Copy_u8PortNumber, u8 CopyPinNumber , u8 CopyPinDirection);
+
+Error_status DIO_Enum_SetPinValue(u8 Copy_u8PortNumber, u8 CopyPinNumber , u8 CopyPinValue);
+
+Error_status DIO_Enum_GetPinValue(u8 Copy_u8PortNumber, u8 CopyPinNumber , u8 * Copy_pu8PinValue);
+
+
+
+Error_status DIO_Enum_SetPortDirection(u8 Copy_u8PortNumber, u8 CopyPortDirection);
+
+Error_status DIO_Enum_SetPortValue(u8 Copy_u8PortNumber, u8 CopyPortValue);
+
+Error_status DIO_Enum_GetPortValue(u8 Copy_u8PortNumber, u8 * Copy_pu8PortValue);
+
+
+#endif /* DIO_INTERFACE_H_ */

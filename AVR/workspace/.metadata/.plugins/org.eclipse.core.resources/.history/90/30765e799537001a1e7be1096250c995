@@ -1,0 +1,29 @@
+/*
+ * DIO_config.c
+ *
+ *  Created on: 15 Jan 2020
+ *      Author: Mohamed
+ */
+
+#include "DIO_driver.h"
+
+#define GRP_9_LCD_EN	8
+#define GRP_10_LCD_RS	9
+#define GRP_11_LCD_RW	10
+#define GRP_12_LCD_DATA	11
+
+DIO_config_t DIO_groups [DIO_Number_of_groups]=
+{
+	{	PORTD , 0B10000000,  OUTPUT , DONOTCARE		},		/*led1 		1 group*/
+	{	PORTD , 0B01100000,  OUTPUT	, DONOTCARE		},		/*led2 		2 group*/
+	{	PORTD , 0B00000001,  INPUT  , PULL_UP_ENABLE},		/*BTN0 		3 group*/
+	{	PORTC , 0B11110000,  OUTPUT , DONOTCARE		},		/*SEG1 		4 group*/
+	{	PORTC , 0B00000100,  OUTPUT , DONOTCARE		},		/*SEG1_EN 	5 group*/
+	{	PORTC , 0B00001000,  OUTPUT , DONOTCARE		},		/*SEG2_EN 	6 group*/
+	{	PORTD , 0B00000010,  INPUT  , PULL_UP_ENABLE},		/*BTN1 		7 group*/
+	{	PORTD , 0B00000100,  INPUT  , PULL_UP_ENABLE},		/*BTN2 		8 group*/
+	{ 	PORTB , 0B00001000 , OUTPUT , DONOTCARE  	} ,
+	{ 	PORTB , 0B00000100 , OUTPUT , DONOTCARE   	} ,
+	{ 	PORTB , 0B00000010 , OUTPUT , DONOTCARE   	} ,
+	{ 	PORTA , 0B11110000 , OUTPUT , DONOTCARE  	}
+};

@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1601824103 source:d:\iti\upload\sort_lib\static_sorting.c
+	<stdio.h>
+	"static_sorting.h"
+
+1600774812 d:\iti\upload\sort_lib\static_sorting.h
+
+1601823478 source:d:\iti\upload\sort_lib\main.c
+	<stdio.h>
+	<stdlib.h>
+	"static_sorting.h"
+

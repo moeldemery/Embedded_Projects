@@ -1,0 +1,177 @@
+/*
+	Name: 			DIO.h
+	Copyright: 		v1
+	Author: 		mohamed eldemery
+	Date: 			07/02/20 06:22
+	Description: 	
+ */
+#include "STD_TYPES.h"
+#include "BIT_MATH.h"
+#include "DIO.h"
+
+Error_status DIO_enum_Init(void)
+{
+	/*config all pins output pp(pushpull) 2mhz */
+	Error_status local_eum_returnState = OK;
+
+	return local_eum_returnState;
+
+}
+Error_status DIO_enum_SetPinDirection(u8 Copy_u8_PinNo, u8 Copy_u8_PinMode)
+{
+	Error_status local_eum_returnState = OK;
+	if (Copy_u8_PinNo <= DIO_PIN_34)
+	{
+		u8 Local_u8_PortNo = Copy_u8_PinNo/16;
+		u8 Local_u8_PinNo  = Copy_u8_PinNo%16;
+		switch(Local_u8_PortNo)
+		{
+		case 0:
+		{
+			if (Copy_u8_PinMode == DIO_IN_PULL_DOWN)
+			{
+				ASSIGN_NIBBLE_VALUE(DIO_PORT_A->CRL,Local_u8_PinNo,Copy_u8_PinMode);
+			}
+			if (Local_u8_PinNo <=7)
+			{
+				ASSIGN_NIBBLE_VALUE(DIO_PORT_A->CRL,Local_u8_PinNo,Copy_u8_PinMode);
+			}
+			else if (Local_u8_PinNo <=15)
+			{
+				Local_u8_PinNo -=8;
+				ASSIGN_NIBBLE_VALUE(DIO_PORT_A->CRH,Local_u8_PinNo,Copy_u8_PinMode);
+			}
+
+			break;
+		}
+		case 1:
+		{
+			if (Local_u8_PinNo <=7)
+			{
+				ASSIGN_NIBBLE_VALUE(DIO_PORT_B->CRL,Local_u8_PinNo,Copy_u8_PinMode);
+			}
+			else if (Local_u8_PinNo <=15)
+			{
+				Local_u8_PinNo -=8;
+				ASSIGN_NIBBLE_VALUE(DIO_PORT_B->CRH,Local_u8_PinNo,Copy_u8_PinMode);
+			}
+
+			break;
+		}
+		case 2:
+		{
+			if (Local_u8_PinNo <=7)
+			{
+				ASSIGN_NIBBLE_VALUE(DIO_PORT_C->CRL,Local_u8_PinNo,Copy_u8_PinMode);
+			}
+			else if (Local_u8_PinNo <=15)
+			{
+				Local_u8_PinNo -=8;
+				ASSIGN_NIBBLE_VALUE(DIO_PORT_C->CRH,Local_u8_PinNo,Copy_u8_PinMode);
+			}
+
+			break;
+		}
+		}
+	}
+	else
+	{
+		/*outside range */
+		local_eum_returnState = OUTOFRANGE;
+	}
+
+	return local_eum_returnState;
+
+}
+
+Error_status DIO_enum_SetPinValue(u8 Copy_u8_PinNo, u8 Copy_u8_PinValue)
+{
+	Error_status local_eum_returnState = OK;
+	if (Copy_u8_PinNo <= DIO_PIN_34)
+	{
+		u8 Local_u8_PortNo = Copy_u8_PinNo/16;
+		u8 Local_u8_PinNo  = Copy_u8_PinNo%16;
+		switch(Local_u8_PortNo)
+		{
+		case 0:	/*case port a selected*/
+		{
+			if (Copy_u8_PinValue == DIO_HIGH) /*check data high or low*/
+			{
+				SET_BIT(DIO_PORT_A->ODR ,Local_u8_PinNo);
+			} else {
+				CLR_BIT(DIO_PORT_A->ODR ,Local_u8_PinNo);
+			}
+
+			break;
+		}
+		case 1:/*case port b selected*/
+		{
+			if (Copy_u8_PinValue == DIO_HIGH) /*check data high or low*/
+			{
+				SET_BIT(DIO_PORT_B->ODR ,Local_u8_PinNo);
+			} else {
+				CLR_BIT(DIO_PORT_B->ODR ,Local_u8_PinNo);
+			}
+
+			break;
+		}
+		case 2:/*case port c selected*/
+		{
+			if (Copy_u8_PinValue == DIO_HIGH) /*check data high or low*/
+			{
+				SET_BIT(DIO_PORT_C->ODR ,Local_u8_PinNo);
+			} else {
+				CLR_BIT(DIO_PORT_C->ODR ,Local_u8_PinNo);
+			}
+
+			break;
+		}
+		}
+	}
+	else
+	{
+		/*outside range */
+		local_eum_returnState = OUTOFRANGE;
+	}
+	return local_eum_returnState;
+}
+
+
+Error_status DIO_u8_GetPinValue(u8 Copy_u8_PinNo ,u8* Copy_u8_ReturnValue)
+{
+	Error_status local_eum_returnState = OK;
+	if (Copy_u8_ReturnValue == NULL)
+	{
+		local_eum_returnState=NULLPOINTER;
+	}
+	else if(Copy_u8_PinNo <= DIO_PIN_34)
+	{
+		u8 Local_u8_PortNo = Copy_u8_PinNo/16;
+		u8 Local_u8_PinNo  = Copy_u8_PinNo%16;
+		switch(Local_u8_PortNo)
+				{
+				case 0:	/*case port a selected*/
+				{
+					Copy_u8_ReturnValue = GET_BIT(DIO_PORT_A->IDR,Local_u8_PinNo);
+					break;
+				}
+				case 1:/*case port b selected*/
+				{
+					Copy_u8_ReturnValue = GET_BIT(DIO_PORT_B->IDR,Local_u8_PinNo);
+					break;
+				}
+				case 2:/*case port c selected*/
+				{
+					Copy_u8_ReturnValue = GET_BIT(DIO_PORT_C->IDR,Local_u8_PinNo);
+					break;
+				}
+				}
+
+	}
+	else
+	{
+		local_eum_returnState = OUTOFRANGE;
+	}
+	return local_eum_returnState;
+}
+

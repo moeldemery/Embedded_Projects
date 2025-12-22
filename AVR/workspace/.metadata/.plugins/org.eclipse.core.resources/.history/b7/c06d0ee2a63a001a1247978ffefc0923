@@ -1,0 +1,30 @@
+/*
+ * KPD.c
+ *
+ *  Created on: 16 Jan 2020
+ *      Author: Mohamed
+ */
+
+
+#include "../INC/KPD.h"
+
+u8 KPD_Get_State(void)
+{
+
+    u8 Col_value,State_busy;
+
+    DIO_Write(HIGH,GRP_13_ROW);
+    Col_value = DIO_Read(GRP_14_COL);
+
+        if (Col_value== (0B0000<<KPD_COL_PIN))
+        {
+            State_busy = 0x00;
+        }
+        else
+        {
+            State_busy = 0xFF;
+        }
+
+
+    return State_busy;
+}

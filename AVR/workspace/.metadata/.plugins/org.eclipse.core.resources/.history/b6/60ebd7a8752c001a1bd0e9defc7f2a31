@@ -1,0 +1,47 @@
+
+#include "STD_TYPES.h"
+#include "BIT_MATH.h"
+
+#include "DIO_interface.h"
+#include "DIO_register.h"
+
+
+Error_status DIO_EnumSetPinDirection(u8 Copy_u8PortNumber, u8 CopyPinNumber , u8 CopyPinDirection)
+{
+	Error_status state = OK;
+	if(Copy_u8PortNumber >= DIO_PORTA && |
+	    Copy_u8PortNumber <= DIO_PORTD && |
+		CopyPinNumber >= DIO_PIN_0 && |
+		CopyPinNumber <= DIO_PIN_7 )
+	{
+		
+	}
+	
+}
+
+Error_status DIO_EnumSetPinValue(u8 Copy_u8PortNumber, u8 CopyPinNumber , u8 CopyPinValue)
+{
+	
+}
+
+Error_status DIO_EnumGetPinValue(u8 Copy_u8PortNumber, u8 CopyPinNumber , u8 * Copy_pu8PinValue)
+{
+	
+}
+
+/***********************************************************************/
+
+Error_status DIO_EnumSetPortDirection(u8 Copy_u8PortNumber, u8 CopyPortDirection)
+{
+	
+}
+
+Error_status DIO_EnumSetPortValue(u8 Copy_u8PortNumber, u8 CopyPortValue)
+{
+	
+}
+
+Error_status DIO_EnumGetPortValue(u8 Copy_u8PortNumber, u8 * Copy_pu8PortValue)
+{
+	
+}

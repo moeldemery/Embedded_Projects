@@ -1,0 +1,235 @@
+/*
+ * ADC.c
+ *
+ *  Created on: 28 Jan 2020
+ *      Author: Mohamed
+ */
+
+#include "../INC/ADC.h"
+
+ADC_config_t ADC_groups={	ADC_EN , ADC_AVCC , ADC_AUTO_TRIG	,ADC_LEFT_ADJ , ADC_CH_0  , ADC_PRE_64};
+
+void ADC_Init(void)
+{
+	u8 ADCSRA_temp;
+	u8 ADMUX_TEMP;
+	switch (ADC_groups.ADC_Enable)
+	{
+		case ADC_EN:
+		{
+			SET_BIT(ADCSRA_temp,ADEN);
+			break;
+		}
+		case ADC_DISABLE:
+		{
+			CLR_BIT(ADCSRA_temp,ADEN);
+			break;
+
+		}
+		default:
+				break;
+	}
+	/***************************************************************/
+	switch (ADC_groups.ADC_Prescaller)
+	{
+		case ADC_PRE_2:
+		{
+			SET_BIT(ADCSRA_temp,ADPS0);
+			CLR_BIT(ADCSRA_temp,ADPS1);
+			CLR_BIT(ADCSRA_temp,ADPS2);
+			break;
+		}
+		case ADC_PRE_4:
+		{
+			CLR_BIT(ADCSRA_temp,ADPS0);
+			SET_BIT(ADCSRA_temp,ADPS1);
+			CLR_BIT(ADCSRA_temp,ADPS2);
+			break;
+		}
+		case ADC_PRE_8:
+		{
+			SET_BIT(ADCSRA_temp,ADPS0);
+			SET_BIT(ADCSRA_temp,ADPS1);
+			CLR_BIT(ADCSRA_temp,ADPS2);
+			break;
+		}
+		case ADC_PRE_16:
+		{
+			CLR_BIT(ADCSRA_temp,ADPS0);
+			CLR_BIT(ADCSRA_temp,ADPS1);
+			SET_BIT(ADCSRA_temp,ADPS2);
+			break;
+		}
+		case ADC_PRE_32:
+		{
+			SET_BIT(ADCSRA_temp,ADPS0);
+			CLR_BIT(ADCSRA_temp,ADPS1);
+			SET_BIT(ADCSRA_temp,ADPS2);
+			break;
+		}
+		case ADC_PRE_64:
+		{
+			CLR_BIT(ADCSRA_temp,ADPS0);
+			SET_BIT(ADCSRA_temp,ADPS1);
+			SET_BIT(ADCSRA_temp,ADPS2);
+			break;
+		}
+		case ADC_PRE_128:
+		{
+			SET_BIT(ADCSRA_temp,ADPS0);
+			SET_BIT(ADCSRA_temp,ADPS1);
+			SET_BIT(ADCSRA_temp,ADPS2);
+			break;
+		}
+		default:
+				break;
+	}
+	/***************************************************************/
+	switch (ADC_groups.ADC_Volt_Ref)
+	{
+		case ADC_REF_DISABLE:
+		{
+			CLR_BIT(ADMUX_TEMP,REFS0);
+			CLR_BIT(ADMUX_TEMP,REFS1);
+			break;
+		}
+		case ADC_AVCC:
+		{
+			SET_BIT(ADMUX_TEMP,REFS0);
+			CLR_BIT(ADMUX_TEMP,REFS1);
+			break;
+		}
+		case ADC_INTERNAL_2_56_V:
+		{
+			SET_BIT(ADMUX_TEMP,REFS0);
+			SET_BIT(ADMUX_TEMP,REFS1);
+			break;
+		}
+		default:
+				break;
+	}
+	/***************************************************************/
+	switch (ADC_groups.ADC_Data_Adjustment)
+	{
+		case ADC_LEFT_ADJ:
+		{
+			SET_BIT(ADMUX_TEMP,ADLAR);
+			break;
+		}
+		case ADC_RIGHT_ADJ:
+		{
+			CLR_BIT(ADMUX_TEMP,ADLAR);
+			break;
+
+		}
+		default:
+				break;
+	}
+	/***************************************************************/
+	switch (ADC_groups.ADC_Channel)
+	{
+		case ADC_CH_0:
+		{
+			SET_BIT(ADMUX_TEMP,MUX0);
+			SET_BIT(ADMUX_TEMP,MUX1);
+			SET_BIT(ADMUX_TEMP,MUX2);
+			SET_BIT(ADMUX_TEMP,MUX3);
+			SET_BIT(ADMUX_TEMP,MUX4);
+			break;
+		}
+		case ADC_CH_1:
+		{
+			SET_BIT(ADMUX_TEMP,MUX0);
+			SET_BIT(ADMUX_TEMP,MUX1);
+			SET_BIT(ADMUX_TEMP,MUX2);
+			SET_BIT(ADMUX_TEMP,MUX3);
+			SET_BIT(ADMUX_TEMP,MUX4);
+			break;
+		}
+		case ADC_CH_2:
+		{
+			SET_BIT(ADMUX_TEMP,MUX0);
+			SET_BIT(ADMUX_TEMP,MUX1);
+			SET_BIT(ADMUX_TEMP,MUX2);
+			SET_BIT(ADMUX_TEMP,MUX3);
+			SET_BIT(ADMUX_TEMP,MUX4);
+			break;
+		}
+		case ADC_CH_3:
+		{
+			SET_BIT(ADMUX_TEMP,MUX0);
+			SET_BIT(ADMUX_TEMP,MUX1);
+			SET_BIT(ADMUX_TEMP,MUX2);
+			SET_BIT(ADMUX_TEMP,MUX3);
+			SET_BIT(ADMUX_TEMP,MUX4);
+			break;
+		}
+		case ADC_CH_4:
+		{
+			SET_BIT(ADMUX_TEMP,MUX0);
+			SET_BIT(ADMUX_TEMP,MUX1);
+			SET_BIT(ADMUX_TEMP,MUX2);
+			SET_BIT(ADMUX_TEMP,MUX3);
+			SET_BIT(ADMUX_TEMP,MUX4);
+			break;
+		}
+		case ADC_CH_5:
+		{
+			SET_BIT(ADMUX_TEMP,MUX0);
+			SET_BIT(ADMUX_TEMP,MUX1);
+			SET_BIT(ADMUX_TEMP,MUX2);
+			SET_BIT(ADMUX_TEMP,MUX3);
+			SET_BIT(ADMUX_TEMP,MUX4);
+			break;
+		}
+		case ADC_CH_6:
+		{
+			SET_BIT(ADMUX_TEMP,MUX0);
+			SET_BIT(ADMUX_TEMP,MUX1);
+			SET_BIT(ADMUX_TEMP,MUX2);
+			SET_BIT(ADMUX_TEMP,MUX3);
+			SET_BIT(ADMUX_TEMP,MUX4);
+			break;
+		}
+		case ADC_CH_7:
+		{
+			SET_BIT(ADMUX_TEMP,MUX0);
+			SET_BIT(ADMUX_TEMP,MUX1);
+			SET_BIT(ADMUX_TEMP,MUX2);
+			SET_BIT(ADMUX_TEMP,MUX3);
+			SET_BIT(ADMUX_TEMP,MUX4);
+			break;
+		}
+
+		default:
+				break;
+	}
+
+
+
+    ADMUX &= ~(1<<MUX4);
+    ADMUX &= ~(1<<MUX3);
+    ADMUX &= ~(1<<MUX2);
+    ADMUX &= ~(1<<MUX1);
+    ADMUX &= ~(1<<MUX0); //00000 = ADC0
+
+    ADCSRA |= (1<<7); //ADEN enabled
+
+
+    ADCSRA |= (1<<2);
+    ADCSRA |= (1<<1);
+    ADCSRA &= ~(1<<0); //division factor 110 =  /64
+
+
+    ADMUX &= ~(1<<7);
+    ADMUX |= (1<<6); //REFS[1:0] = 01 AVcc
+
+    ADMUX |= (1<<5); //ADLAR left based
+
+    ADMUX &= ~(1<<4);
+    ADMUX &= ~(1<<3);
+    ADMUX &= ~(1<<2);
+    ADMUX &= ~(1<<1);
+    ADMUX &= ~(1<<0); //00000 = ADC0
+
+}

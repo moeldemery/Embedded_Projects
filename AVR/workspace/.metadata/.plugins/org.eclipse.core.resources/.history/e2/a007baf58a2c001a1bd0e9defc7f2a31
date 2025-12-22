@@ -1,0 +1,17 @@
+/*
+ * main.c
+ *
+ *  Created on: 31 Dec 2019
+ *      Author: Mohamed
+ */
+
+#include "DIO_interface.h"
+
+int main(void)
+{
+
+
+
+
+	return 0 ;
+}

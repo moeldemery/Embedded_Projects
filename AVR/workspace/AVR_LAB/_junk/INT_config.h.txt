@@ -1,0 +1,13 @@
+/*
+ * INT_config.h
+ *
+ *  Created on: 11 Jan 2020
+ *      Author: Mohamed
+ */
+
+#ifndef MCAL_INC_INT_CONFIG_H_
+#define MCAL_INC_INT_CONFIG_H_
+
+
+
+#endif /* MCAL_INC_INT_CONFIG_H_ */

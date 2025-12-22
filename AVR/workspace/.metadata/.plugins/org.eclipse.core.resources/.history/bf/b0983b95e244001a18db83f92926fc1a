@@ -1,0 +1,48 @@
+/*
+ * main.c
+ *
+ *  Created on: 1 Feb 2020
+ *      Author: Mohamed
+ */
+
+#include "FreeRTOS/FreeRTOS.h"
+#include "FreeRTOS/task.h"
+
+
+/* Define Tasks Priorities */
+#define  TASK1_PRIORITY (3)
+#define  TASK2_PRIORITY (3)
+
+
+void task1_code(void*pvParamter);
+ void task2_code(void*pvParamter);
+
+int main(void)
+{
+	DDRD=0xff;
+	xTaskCreate(task1_code,NULL,100,NULL,TASK1_PRIORITY,NULL);//pointer fn -name-stacksize-piority-pointer to task
+	//xTaskCreate(task2_code,NULL,100,NULL,TASK2_PRIORITY,NULL);
+	vTaskStartScheduler();
+
+	while(1)
+	{
+
+	}
+	return 0;
+}
+
+
+void task1_code(void*pvParamter)
+{
+	PORTD = 0x0f;
+	vTaskDelay(1000);
+	PORTD = 0xf0;
+	vTaskDelay(1000);
+}
+ void task2_code(void*pvParamter)
+ {
+	 PORTD = 0x00;
+	vTaskDelay(2000);
+	PORTD = 0x00;
+	vTaskDelay(2000);
+ }

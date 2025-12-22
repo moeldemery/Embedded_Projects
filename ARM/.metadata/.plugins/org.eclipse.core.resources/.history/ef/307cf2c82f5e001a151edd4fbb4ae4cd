@@ -1,0 +1,11 @@
+
+typedef struct		//arrangement is important
+{
+	volatile u32 SR ;		//u32 to increment by 0x4 (as Step)
+	volatile u32 DR ;
+	volatile u32 BRR ;
+	volatile u32 CR1 ;
+	volatile u32 CR2;
+	volatile u32 CR3 ;
+	volatile u32 GTPR;
+}USART_REG;

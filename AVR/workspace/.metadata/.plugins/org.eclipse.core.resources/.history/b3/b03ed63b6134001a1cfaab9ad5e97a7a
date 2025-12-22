@@ -1,0 +1,30 @@
+/*
+ * INT_register.h
+ *
+ *  Created on: 11 Jan 2020
+ *      Author: Mohamed
+ */
+
+#ifndef MCAL_INC_INT_REGISTER_H_
+#define MCAL_INC_INT_REGISTER_H_
+
+#define SREG_REG		(*((volatile u8*)(0x5F)))
+
+#define GICR_REG  	  	(*((volatile u8*)(0x5B)))
+#define GIFR_REG  	  	(*((volatile u8*)(0x5A)))
+
+#define MCUCR_REG 	 	 (*((volatile u8*)(0x55)))
+	#define JTRF 	4
+	#define WDRF 	3
+	#define BORF 	2
+	#define EXTRF 	1
+	#define PORF	0
+
+#define MCUCSR_REG 	  	(*((volatile u8*)(0x54)))
+
+
+#define EXT_INT_0 	0
+#define EXT_INT_1 	1
+#define EXT_INT_2 	2
+
+#endif /* MCAL_INC_INT_REGISTER_H_ */

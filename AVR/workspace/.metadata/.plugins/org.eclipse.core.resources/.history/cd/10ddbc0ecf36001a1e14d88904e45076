@@ -1,0 +1,13 @@
+/*
+ * DIO_driver.c
+ *
+ *  Created on: 14 Jan 2020
+ *      Author: Mohamed
+ */
+//#include "../../MCAL/INC/DIO_driver.h"
+#include "../../UTILITIES/STD_TYPES.h"
+#include "DIO_driver.h"
+
+
+DIO_config_t DIO_groups ={PORTA, 0xff, 0b11110000 ,PULL_UP_DISABLE};
+
